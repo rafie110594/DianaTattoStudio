@@ -1,0 +1,22 @@
+# Source/archive media not used by the site (kept out of repo & deploys)
+Balinase/
+Fine Line/
+Japanese/
+Maoriental/
+Medusa/
+Shicano/
+Vidio/
+contoh.jpeg
+reverensi.mp4
+/logo.png
+
+# Unused duplicates inside assets/ (site only references assets/video/cinematic.mp4)
+assets/video/hero.mp4
+assets/img/about/about-custom.jpg
+
+# Vercel
+.vercel/
+
+# OS / editor
+Thumbs.db
+.DS_Store

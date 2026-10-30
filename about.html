@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About Us — Diana Tattoo Studio</title>
+<meta name="description" content="Tentang Diana Tattoo Studio: studio tato custom di Bali sejak 2024, custom only, dan standar higiene medis.">
+<meta name="theme-color" content="#0B0803">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" href="assets/img/logo.png">
+</head>
+<body class="page-about">
+
+<!-- ============ header ============ -->
+<header class="site-head">
+  <a class="brand" href="index.html" aria-label="Diana Tattoo Studio — beranda">
+    <img class="brand__mark" src="assets/img/logo.png" alt="" width="200" height="200">
+    <span class="brand__name">Diana<span>Tattoo Studio</span></span>
+  </a>
+
+  <nav class="nav" aria-label="Utama">
+    <a class="nav__link" href="index.html#tattoo-styles">Tattoo Styles</a>
+    <a class="nav__link" href="hygiene.html">Hygiene Standards</a>
+    <a class="nav__link is-current" href="about.html" aria-current="page">About Us</a>
+    <a class="nav__link" href="aftercare.html">Tattoo After Care</a>
+    <a class="nav__link" href="location.html">Location</a>
+    <a class="nav__link" href="index.html#contact">Contact</a>
+  </nav>
+
+  <div class="site-head__end">
+    <a class="btn btn--gold btn--block btn--sm" href="index.html#book">Book a session</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Buka menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="nav-mobile" id="navMenu" data-open="false" aria-hidden="true" inert>
+  <nav aria-label="Menu mobile">
+    <a href="index.html#tattoo-styles">Tattoo Styles</a>
+    <a href="hygiene.html">Hygiene Standards</a>
+    <a href="about.html">About Us</a>
+    <a href="aftercare.html">Tattoo After Care</a>
+    <a href="location.html">Location</a>
+    <a href="index.html#contact">Contact</a>
+    <a class="nav-mobile__book" href="index.html#book">Book a session</a>
+  </nav>
+</div>
+
+<main class="about-page">
+  <span class="about-page__wm" aria-hidden="true">ABOUT</span>
+
+  <div class="about-head">
+    <p class="about-head__eyebrow" data-reveal>Tentang Kami</p>
+    <h1 class="about-head__title" data-reveal style="--d:.08s">About Us</h1>
+    <p class="about-head__sub" data-reveal style="--d:.16s">Studio tato custom di Bali sejak 2024. Dibuat sekali, ditanggung seumur hidup.</p>
+  </div>
+
+  <div class="about-intro">
+    <div class="about-intro__copy" data-reveal>
+      <p>Diana Tattoo Studio lahir dari satu keyakinan sederhana: tato bukan produk massal. Setiap garis seharusnya hanya ada pada satu kulit, dibuat untuk satu cerita, dan dirancang sejak awal bersama pemiliknya.</p>
+      <p>Karena itu kami <strong>custom only</strong> &mdash; tidak ada katalog desain siap pakai, tidak ada karya yang diulang. Semua dimulai dari konsultasi: ide, referensi, penempatan, sampai makna yang ingin dibawa.</p>
+      <p>Enam gaya yang kami tekuni &mdash; Balinese, Fine Line, Japanese, Maoriental, Medusa, dan Shicano &mdash; masing-masing punya karakter kuat dan dikerjakan dengan pendekatan yang paling sesuai.</p>
+    </div>
+
+    <figure class="about-intro__figure" data-reveal style="--d:.12s">
+      <div class="about-figure__media" data-slideshow>
+        <img class="about-figure__img is-active" src="assets/img/ring/g01-balinase.jpg" alt="Karya tato gaya Balinese di Diana Tattoo Studio" width="1200" height="1599">
+        <img class="about-figure__img" alt="" width="1200" height="1599" aria-hidden="true" decoding="async">
+      </div>
+      <figcaption class="about-figure__cap">Balinese</figcaption>
+    </figure>
+  </div>
+
+  <ul class="about-values">
+    <li class="about-values__item" data-reveal>
+      <h2 class="about-values__title">Custom Only</h2>
+      <p class="about-values__text">Desain eksklusif untuk satu orang. Tidak ada flash, tidak ada duplikat.</p>
+    </li>
+    <li class="about-values__item" data-reveal style="--d:.06s">
+      <h2 class="about-values__title">Standar Higiene Medis</h2>
+      <p class="about-values__text">Sterilisasi, bahan sekali pakai, dan prosedur yang sama untuk setiap klien. <a class="about-link" href="hygiene.html">Lihat standar kami</a>.</p>
+    </li>
+    <li class="about-values__item" data-reveal style="--d:.12s">
+      <h2 class="about-values__title">Konsultasi Gratis</h2>
+      <p class="about-values__text">Diskusi ide tanpa biaya dan tanpa komitmen, sampai desainnya benar-benar pas.</p>
+    </li>
+  </ul>
+
+  <div class="about-process">
+    <h2 class="about-process__title" data-reveal>Alur Kerja</h2>
+    <ol class="about-process__list">
+      <li class="about-process__item" data-reveal>
+        <span class="about-process__num" aria-hidden="true">01</span>
+        <div>
+          <h3 class="about-process__name">Konsultasi</h3>
+          <p class="about-process__text">Cerita ide, referensi, dan penempatan. Kami bantu arahkan agar realistis di kulit.</p>
+        </div>
+      </li>
+      <li class="about-process__item" data-reveal style="--d:.06s">
+        <span class="about-process__num" aria-hidden="true">02</span>
+        <div>
+          <h3 class="about-process__name">Desain &amp; Revisi</h3>
+          <p class="about-process__text">Sketsa custom dibuat khusus, direvisi sampai cocok sebelum jarum menyentuh kulit.</p>
+        </div>
+      </li>
+      <li class="about-process__item" data-reveal style="--d:.12s">
+        <span class="about-process__num" aria-hidden="true">03</span>
+        <div>
+          <h3 class="about-process__name">Sesi Tato</h3>
+          <p class="about-process__text">Dikerjakan dengan alat steril dan bahan sekali pakai, dibuka di depan klien.</p>
+        </div>
+      </li>
+      <li class="about-process__item" data-reveal style="--d:.18s">
+        <span class="about-process__num" aria-hidden="true">04</span>
+        <div>
+          <h3 class="about-process__name">Aftercare</h3>
+          <p class="about-process__text">Panduan tertulis dan kontrol penyembuhan. <a class="about-link" href="aftercare.html">Baca panduannya</a>.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="about-page__foot">
+    <a class="btn btn--gold" href="index.html#book">Book a session</a>
+    <a class="about-page__back" href="index.html">Kembali ke beranda</a>
+  </div>
+</main>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
