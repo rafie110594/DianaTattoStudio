@@ -7,9 +7,11 @@
 /Vidio/
 /contoh.jpeg
 /reverensi.mp4
+/lokasi.jpeg
 /logo.png
 assets/video/hero.mp4
 assets/img/about/about-custom.jpg
 .git/
 node_modules/
 .vercel/
+.env.local

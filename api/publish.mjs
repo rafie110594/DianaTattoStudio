@@ -73,8 +73,9 @@ export default async function handler(req, res) {
 
   let repoHtml = {};
   try {
-    repoHtml.index = await readTextFile("index.html");
-    repoHtml.location = await readTextFile("location.html");
+    for (const page of ["index.html", "location.html"]) {
+      repoHtml[page] = await readTextFile(page);
+    }
   } catch {
     return send(res, 502, { error: "Repo belum siap. Deploy versi dengan index.html/location.html lebih dulu." });
   }
