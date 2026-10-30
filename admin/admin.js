@@ -198,7 +198,8 @@
         renderGallery();
       });
       $(".del", li).addEventListener("click", () => {
-        SITE.gallery.splice(i, 1);
+        const [removed] = SITE.gallery.splice(i, 1);
+        if (removed && removed.src && !pendingUploads.has(removed.src)) pendingDeletes.add(removed.src);
         renderGallery();
       });
       list.appendChild(li);
@@ -226,20 +227,28 @@
         th.className = "thumb";
         th.innerHTML = `<img src="${esc(p.src)}" alt=""><button title="Hapus" data-del="${i}:${j}">×</button>`;
         $("button", th).addEventListener("click", () => {
-          s.photos.splice(j, 1);
+          const [removed] = s.photos.splice(j, 1);
+          if (removed && removed.src && !pendingUploads.has(removed.src)) pendingDeletes.add(removed.src);
           renderStyles();
         });
         photos.appendChild(th);
       });
       const log = $(".log", card);
-      $("input[data-add]", card).addEventListener("change", (e) => {
+      $("input[data-add]", card).addEventListener("change", async (e) => {
         const file = e.target.files[0];
+        e.target.value = "";
         if (!file) return;
-        resizeImage(file).then((img) => {
-          s.photos.push(img);
+        log.textContent = "Mengunggah…";
+        try {
+          const img = await resizeImage(file);
+          const up = await uploadImage(img.blob, `styles/${s.slug}`, s.slug);
+          pendingUploads.set(up.path, up.sha);
+          s.photos.push({ src: up.path, w: img.w, h: img.h });
           renderStyles();
-          log.textContent = "Foto ditambahkan: " + img.src;
-        }).catch((err) => { log.textContent = "Gagal: " + err.message; });
+          $(`#stylesList .style-card-ed:nth-child(${i + 1}) .log`).textContent = "Upload OK: " + up.path;
+        } catch (err) {
+          $(`#stylesList .style-card-ed:nth-child(${i + 1}) .log`).textContent = "Gagal: " + err.message;
+        }
       });
       card.querySelectorAll("input[data-k]").forEach((inp) => {
         inp.addEventListener("input", (e) => {

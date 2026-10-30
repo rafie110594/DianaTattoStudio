@@ -64,11 +64,15 @@ export default async function handler(req, res) {
     return send(res, 422, { error: e instanceof ValidationError ? e.message : "Data situs tidak valid" });
   }
 
-  const uploads = Array.isArray(body.files) ? body.files : [];
-  const deletes = Array.isArray(body.deletes) ? body.deletes : [];
+  const uploads = (Array.isArray(body.files) ? body.files : []).map((f) =>
+    typeof f === "string" ? { path: f } : f
+  );
+  const deletes = (Array.isArray(body.deletes) ? body.deletes : []).map((f) =>
+    typeof f === "string" ? { path: f } : f
+  );
   const pathRe = /^assets\/img\/[A-Za-z0-9_\-./]+\.(jpe?g|png|webp)$/;
   for (const f of [...uploads, ...deletes]) {
-    if (!pathRe.test(f.path) || f.path.includes("..")) return send(res, 422, { error: `Path file tidak valid: ${f.path}` });
+    if (!f || !pathRe.test(f.path) || f.path.includes("..")) return send(res, 422, { error: `Path file tidak valid: ${f && f.path}` });
   }
 
   let repoHtml = {};
