@@ -392,7 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <img class="book-modal__logo" src="assets/img/logo.png" alt="" width="200" height="200">
             <p class="book-modal__brand-name">Diana<span>Tattoo Studio</span></p>
           </div>
-          <p class="book-modal__brand-note">Custom only &middot; Bali<br>Since 2024</p>
+          <p class="book-modal__brand-note">Custom only &middot; Bali<br>Since 2022</p>
         </div>
         <div class="book-modal__body">
           <p class="book-modal__eyebrow">Book a Session</p>

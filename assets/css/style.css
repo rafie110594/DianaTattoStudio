@@ -531,9 +531,10 @@ html.reveal-ready [data-reveal].is-in {
   transform: none;
 }
 
-/* foto sedikit lebih dramatis: mulai lebih jauh */
+/* foto sedikit lebih dramatis: mulai lebih jauh (gambar tidak disembunyikan) */
 html.reveal-ready .style-card[data-reveal] {
-  transform: translate3d(0, 3.5rem, 0) scale(.965);
+  opacity: 1;
+  transform: translate3d(0, 1.25rem, 0) scale(.985);
 }
 html.reveal-ready .style-card[data-reveal].is-in {
   transform: none;
@@ -2033,8 +2034,10 @@ body.page-location::after {
 
 .location-figure__img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
+  max-height: 34rem;
   object-fit: cover;
+  object-position: 50% 62%;
   border-radius: 1rem;
   border: 1px solid var(--hair);
   background: #16120f;
