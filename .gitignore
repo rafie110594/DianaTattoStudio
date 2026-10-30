@@ -9,6 +9,7 @@
 /Vidio/
 /contoh.jpeg
 /reverensi.mp4
+/lokasi.jpeg
 /logo.png
 
 # Unused duplicates inside assets/ (site only references assets/video/cinematic.mp4)
@@ -17,6 +18,8 @@ assets/img/about/about-custom.jpg
 
 # Vercel
 .vercel/
+.env.local
+.env.*.local
 
 # OS / editor
 Thumbs.db

@@ -1,0 +1,14 @@
+{
+  "name": "diana-tattoo-studio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static site for Diana Tattoo Studio with a password-protected git-based admin.",
+  "type": "module",
+  "scripts": {
+    "render": "node scripts/build.mjs",
+    "verify": "node scripts/verify-render.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

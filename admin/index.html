@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin &mdash; Diana Tattoo Studio</title>
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body class="admin">
+  <main id="loginView" class="login">
+    <form id="loginForm" class="login__card" autocomplete="off">
+      <img class="login__logo" src="/assets/img/logo.png" alt="Diana Tattoo Studio" width="96" height="96">
+      <h1>Admin</h1>
+      <p class="login__hint">Masuk untuk mengelola konten, foto, dan lokasi.</p>
+      <label>
+        <span>Password</span>
+        <input id="loginPassword" type="password" name="password" required autocomplete="current-password">
+      </label>
+      <p id="loginError" class="login__error" role="alert"></p>
+      <button class="btn" type="submit">Masuk</button>
+    </form>
+  </main>
+
+  <main id="appView" class="app" hidden>
+    <header class="app__bar">
+      <div class="app__title">Diana Tattoo Studio &mdash; Admin</div>
+      <div class="app__actions">
+        <a class="btn btn--ghost" href="/" target="_blank" rel="noopener">Lihat situs</a>
+        <button id="logoutBtn" class="btn btn--ghost" type="button">Keluar</button>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tabs__item is-active" data-tab="location">Lokasi</button>
+      <button class="tabs__item" data-tab="gallery">Galeri (Ring)</button>
+      <button class="tabs__item" data-tab="styles">Kartu Gaya</button>
+      <button class="tabs__item" data-tab="stats">Statistik &amp; Marquee</button>
+      <button class="tabs__item" data-tab="contact">Kontak</button>
+    </nav>
+
+    <form id="siteForm">
+      <section id="tab-location" class="tab is-active">
+        <h2>Lokasi &amp; Jam Buka</h2>
+
+        <div class="field">
+          <label>Foto tampak depan</label>
+          <input id="locPhotoFile" type="file" accept="image/jpeg,image/png,image/webp">
+          <div class="preview"><img id="locPhotoPreview" alt=""><ul id="logPh" class="log"></ul></div>
+        </div>
+        <div class="field">
+          <label>Alt foto</label>
+          <input id="locPhotoAlt" type="text" maxlength="160">
+        </div>
+        <div class="field">
+          <label>Caption foto</label>
+          <input id="locCaption" type="text" maxlength="160">
+        </div>
+        <div class="field">
+          <label>Alamat</label>
+          <input id="locAddress" type="text" maxlength="160" required>
+        </div>
+        <div class="field">
+          <label>Jam buka</label>
+          <input id="locHours" type="text" maxlength="160" required>
+        </div>
+        <div class="field">
+          <label>CID Google Maps (angka)</label>
+          <input id="locCid" type="text" inputmode="numeric" maxlength="25" required>
+        </div>
+        <div class="field">
+          <label>Patokan jalan (satu per baris, gunakan &lt;strong&gt; bila perlu)</label>
+          <textarea id="locGuide" rows="6" maxlength="1800"></textarea>
+        </div>
+      </section>
+
+      <section id="tab-gallery" class="tab">
+        <h2>Galeri melengkung (hero &amp; slideshow About)</h2>
+        <p class="hint">Urutkan dengan drag. Tambah/hapus foto galeri. Foto disimpan di <code>assets/img/ring/</code>.</p>
+        <div class="row">
+          <div class="field">
+            <label>Tambah foto galeri</label>
+            <input id="galleryFile" type="file" accept="image/jpeg,image/png,image/webp">
+          </div>
+        </div>
+        <p id="galleryLog" class="log"></p>
+        <ul id="galleryList" class="grid-list"></ul>
+        <p class="hint">Klik foto untuk menghapus dari struktur (file dihapus saat publish bila tak dipakai lagi).</p>
+      </section>
+
+      <section id="tab-styles" class="tab">
+        <h2>Kartu Gaya tato</h2>
+        <p class="hint">Ubah nama, deskripsi, dan foto tiap gaya. Foto sampul = foto pertama. Klik foto untuk mengganti.</p>
+        <div id="stylesList"></div>
+      </section>
+
+      <section id="tab-stats" class="tab">
+        <h2>Statistik</h2>
+        <div id="statsList"></div>
+        <h2>Marquee</h2>
+        <div class="field">
+          <label>Baris berjalan (satu per baris)</label>
+          <textarea id="marqueeText" rows="3" maxlength="360"></textarea>
+        </div>
+      </section>
+
+      <section id="tab-contact" class="tab">
+        <h2>Kanal kontak (modal Book)</h2>
+        <div id="contactList"></div>
+      </section>
+    </form>
+
+    <footer class="app__foot">
+      <button id="previewBtn" class="btn btn--ghost" type="button">Pratinjau perbedaan</button>
+      <button id="publishBtn" class="btn" type="button">Terbitkan perubahan</button>
+      <pre id="publishStatus" class="status"></pre>
+    </footer>
+  </main>
+
+<script src="/admin/admin.js"></script>
+</body>
+</html>
