@@ -1,13 +1,14 @@
-# Source/archive media not used by the site (kept out of repo & deploys)
-Balinase/
-Fine Line/
-Japanese/
-Maoriental/
-Medusa/
-Shicano/
-Vidio/
-contoh.jpeg
-reverensi.mp4
+# Source/archive media at the project root, not used by the site
+# (anchored with "/" so they don't match assets/img/styles/* case-insensitively)
+/Balinase/
+/Fine Line/
+/Japanese/
+/Maoriental/
+/Medusa/
+/Shicano/
+/Vidio/
+/contoh.jpeg
+/reverensi.mp4
 /logo.png
 
 # Unused duplicates inside assets/ (site only references assets/video/cinematic.mp4)
