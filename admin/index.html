@@ -8,115 +8,172 @@
 <link rel="stylesheet" href="/admin/admin.css">
 </head>
 <body class="admin">
+
+  <!-- ============ login ============ -->
   <main id="loginView" class="login">
-    <form id="loginForm" class="login__card" autocomplete="off">
+    <form id="loginForm" class="login__card" autocomplete="on" novalidate>
       <img class="login__logo" src="/assets/img/logo.png" alt="Diana Tattoo Studio" width="96" height="96">
       <h1>Admin</h1>
-      <p class="login__hint">Masuk untuk mengelola konten, foto, dan lokasi.</p>
-      <label>
-        <span>Password</span>
-        <input id="loginPassword" type="password" name="password" required autocomplete="current-password">
+      <p class="login__hint">Masuk untuk mengelola foto, video, dan konten situs.</p>
+
+      <div id="hostWarning" class="notice" hidden>
+        <strong>Halaman ini bukan versi Vercel.</strong>
+        <span>Admin hanya bisa menyimpan perubahan di versi Vercel.</span>
+        <a class="btn btn--sm" href="https://diana-tatto-studio.vercel.app/admin">Buka admin Vercel</a>
+      </div>
+
+      <label class="field">
+        <span>Username</span>
+        <input id="loginUsername" type="text" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required>
       </label>
+
+      <label class="field">
+        <span>Password</span>
+        <span class="pw">
+          <input id="loginPassword" type="password" name="password" autocomplete="current-password" required>
+          <button id="togglePw" class="pw__toggle" type="button" aria-label="Tampilkan password">Lihat</button>
+        </span>
+      </label>
+
       <p id="loginError" class="login__error" role="alert"></p>
       <button class="btn" type="submit">Masuk</button>
     </form>
   </main>
 
+  <!-- ============ app ============ -->
   <main id="appView" class="app" hidden>
     <header class="app__bar">
-      <div class="app__title">Diana Tattoo Studio &mdash; Admin</div>
+      <button id="menuBtn" class="icon-btn" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+      <div class="app__title">
+        <span class="app__brand">Diana Tattoo Studio</span>
+        <span class="app__sub">Panel Admin</span>
+      </div>
       <div class="app__actions">
-        <a class="btn btn--ghost" href="/" target="_blank" rel="noopener">Lihat situs</a>
-        <button id="logoutBtn" class="btn btn--ghost" type="button">Keluar</button>
+        <span id="whoami" class="whoami"></span>
+        <a class="btn btn--ghost btn--sm" href="/" target="_blank" rel="noopener">Lihat situs</a>
+        <button id="logoutBtn" class="btn btn--ghost btn--sm" type="button">Keluar</button>
       </div>
     </header>
 
-    <nav class="tabs">
-      <button class="tabs__item is-active" data-tab="location">Lokasi</button>
-      <button class="tabs__item" data-tab="gallery">Galeri (Ring)</button>
-      <button class="tabs__item" data-tab="styles">Kartu Gaya</button>
-      <button class="tabs__item" data-tab="stats">Statistik &amp; Marquee</button>
-      <button class="tabs__item" data-tab="contact">Kontak</button>
-    </nav>
+    <div class="layout">
+      <nav id="sideNav" class="side" aria-label="Bagian admin">
+        <button class="side__item is-active" data-panel="hero">Video Hero</button>
+        <button class="side__item" data-panel="gallery">Galeri</button>
+        <button class="side__item" data-panel="styles">Gaya Tato</button>
+        <button class="side__item" data-panel="location">Lokasi</button>
+        <button class="side__item" data-panel="stats">Statistik</button>
+        <button class="side__item" data-panel="marquee">Marquee</button>
+        <button class="side__item" data-panel="contact">Kontak</button>
+        <div class="side__foot">
+          <span id="dirtyDot" class="dirty" hidden>● perubahan belum disimpan</span>
+        </div>
+      </nav>
 
-    <form id="siteForm">
-      <section id="tab-location" class="tab is-active">
-        <h2>Lokasi &amp; Jam Buka</h2>
-
-        <div class="field">
-          <label>Foto tampak depan</label>
-          <input id="locPhotoFile" type="file" accept="image/jpeg,image/png,image/webp">
-          <div class="preview"><img id="locPhotoPreview" alt=""><ul id="logPh" class="log"></ul></div>
-        </div>
-        <div class="field">
-          <label>Alt foto</label>
-          <input id="locPhotoAlt" type="text" maxlength="160">
-        </div>
-        <div class="field">
-          <label>Caption foto</label>
-          <input id="locCaption" type="text" maxlength="160">
-        </div>
-        <div class="field">
-          <label>Alamat</label>
-          <input id="locAddress" type="text" maxlength="160" required>
-        </div>
-        <div class="field">
-          <label>Jam buka</label>
-          <input id="locHours" type="text" maxlength="160" required>
-        </div>
-        <div class="field">
-          <label>CID Google Maps (angka)</label>
-          <input id="locCid" type="text" inputmode="numeric" maxlength="25" required>
-        </div>
-        <div class="field">
-          <label>Patokan jalan (satu per baris, gunakan &lt;strong&gt; bila perlu)</label>
-          <textarea id="locGuide" rows="6" maxlength="1800"></textarea>
-        </div>
-      </section>
-
-      <section id="tab-gallery" class="tab">
-        <h2>Galeri melengkung (hero &amp; slideshow About)</h2>
-        <p class="hint">Urutkan dengan drag. Tambah/hapus foto galeri. Foto disimpan di <code>assets/img/ring/</code>.</p>
-        <div class="row">
-          <div class="field">
-            <label>Tambah foto galeri</label>
-            <input id="galleryFile" type="file" accept="image/jpeg,image/png,image/webp">
+      <div class="content">
+        <!-- hero -->
+        <section id="panel-hero" class="panel is-active">
+          <h2>Video Hero</h2>
+          <p class="hint">Video latar di bagian paling atas beranda. Maks 50 MB (MP4/WebM).</p>
+          <div class="card">
+            <video id="heroPreview" class="hero-video" muted loop playsinline controls></video>
+            <p id="heroSrc" class="mono"></p>
+            <div class="btnrow">
+              <label class="btn btn--sm file-btn">
+                Ganti video
+                <input id="heroFile" type="file" accept="video/mp4,video/webm" hidden>
+              </label>
+              <button id="heroRemove" class="btn btn--ghost btn--sm" type="button">Hapus video</button>
+            </div>
+            <p id="heroLog" class="log"></p>
           </div>
-        </div>
-        <p id="galleryLog" class="log"></p>
-        <ul id="galleryList" class="grid-list"></ul>
-        <p class="hint">Klik foto untuk menghapus dari struktur (file dihapus saat publish bila tak dipakai lagi).</p>
-      </section>
+        </section>
 
-      <section id="tab-styles" class="tab">
-        <h2>Kartu Gaya tato</h2>
-        <p class="hint">Ubah nama, deskripsi, dan foto tiap gaya. Foto sampul = foto pertama. Klik foto untuk mengganti.</p>
-        <div id="stylesList"></div>
-      </section>
+        <!-- gallery -->
+        <section id="panel-gallery" class="panel">
+          <h2>Galeri <span class="count" id="galleryCount"></span></h2>
+          <p class="hint">Strip foto di hero + slideshow About. Seret kartu untuk mengubah urutan.</p>
+          <div class="card">
+            <label class="btn btn--sm file-btn">
+              Tambah foto
+              <input id="galleryFile" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+            </label>
+            <p id="galleryLog" class="log"></p>
+          </div>
+          <ul id="galleryList" class="tiles"></ul>
+        </section>
 
-      <section id="tab-stats" class="tab">
-        <h2>Statistik</h2>
-        <div id="statsList"></div>
-        <h2>Marquee</h2>
-        <div class="field">
-          <label>Baris berjalan (satu per baris)</label>
-          <textarea id="marqueeText" rows="3" maxlength="360"></textarea>
-        </div>
-      </section>
+        <!-- styles -->
+        <section id="panel-styles" class="panel">
+          <h2>Gaya Tato <span class="count" id="stylesCount"></span></h2>
+          <p class="hint">Foto pertama = sampul kartu di beranda.</p>
+          <div class="card">
+            <button id="styleAdd" class="btn btn--sm" type="button">Tambah gaya</button>
+          </div>
+          <div id="stylesList" class="style-list"></div>
+        </section>
 
-      <section id="tab-contact" class="tab">
-        <h2>Kanal kontak (modal Book)</h2>
-        <div id="contactList"></div>
-      </section>
-    </form>
+        <!-- location -->
+        <section id="panel-location" class="panel">
+          <h2>Lokasi</h2>
+          <div class="card">
+            <div class="media-row">
+              <img id="locPhotoPreview" class="thumb-lg" alt="">
+              <div class="media-actions">
+                <label class="btn btn--sm file-btn">
+                  Ganti foto
+                  <input id="locPhotoFile" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+                </label>
+                <button id="locPhotoRemove" class="btn btn--ghost btn--sm" type="button">Hapus foto</button>
+              </div>
+            </div>
+            <p id="locPhotoLog" class="log"></p>
+          </div>
+
+          <div class="card grid2">
+            <label class="field"><span>Alt foto</span><input id="locPhotoAlt" type="text" maxlength="160"></label>
+            <label class="field"><span>Caption foto</span><input id="locCaption" type="text" maxlength="160"></label>
+            <label class="field"><span>Alamat</span><input id="locAddress" type="text" maxlength="160"></label>
+            <label class="field"><span>Jam buka</span><input id="locHours" type="text" maxlength="160"></label>
+            <label class="field"><span>CID Google Maps</span><input id="locCid" type="text" inputmode="numeric" maxlength="25"></label>
+          </div>
+
+          <h3>Patokan Jalan</h3>
+          <div id="guideList" class="rows"></div>
+          <button id="guideAdd" class="btn btn--ghost btn--sm" type="button">Tambah patokan</button>
+        </section>
+
+        <!-- stats -->
+        <section id="panel-stats" class="panel">
+          <h2>Statistik</h2>
+          <div id="statsList" class="rows"></div>
+          <button id="statAdd" class="btn btn--ghost btn--sm" type="button">Tambah statistik</button>
+        </section>
+
+        <!-- marquee -->
+        <section id="panel-marquee" class="panel">
+          <h2>Marquee</h2>
+          <p class="hint">Teks berjalan di bawah hero. Diulang otomatis 3×.</p>
+          <div id="marqueeList" class="rows"></div>
+          <button id="marqueeAdd" class="btn btn--ghost btn--sm" type="button">Tambah baris</button>
+        </section>
+
+        <!-- contact -->
+        <section id="panel-contact" class="panel">
+          <h2>Kontak</h2>
+          <p class="hint">Kanal yang muncul di modal &ldquo;Book a session&rdquo;.</p>
+          <div id="contactList" class="rows"></div>
+        </section>
+      </div>
+    </div>
 
     <footer class="app__foot">
-      <button id="previewBtn" class="btn btn--ghost" type="button">Pratinjau perbedaan</button>
-      <button id="publishBtn" class="btn" type="button">Terbitkan perubahan</button>
+      <button id="resetBtn" class="btn btn--ghost btn--sm" type="button">Batalkan perubahan</button>
+      <button id="previewBtn" class="btn btn--ghost btn--sm" type="button">Pratinjau</button>
+      <button id="publishBtn" class="btn" type="button">Terbitkan</button>
       <pre id="publishStatus" class="status"></pre>
     </footer>
   </main>
 
-<script src="/admin/admin.js"></script>
+<script type="module" src="/admin/admin.js"></script>
 </body>
 </html>

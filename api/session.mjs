@@ -10,5 +10,5 @@ export default async function handler(req, res) {
     res.end(JSON.stringify({ ok: false }));
     return;
   }
-  res.end(JSON.stringify({ ok: true, csrf: session.csrf, exp: session.exp }));
+  res.end(JSON.stringify({ ok: true, csrf: session.csrf, exp: session.exp, user: session.u || "" }));
 }

@@ -1,4 +1,4 @@
-import { createSession, sessionCookie, checkPassword, rateLimit, clientIp } from "../lib/auth.mjs";
+import { createSession, sessionCookie, checkCredentials, rateLimit, clientIp } from "../lib/auth.mjs";
 
 const json = (res, code, body, headers = {}) => {
   res.statusCode = code;
@@ -26,17 +26,17 @@ export default async function handler(req, res) {
 
   let ok = false;
   try {
-    ok = checkPassword(body.password);
-  } catch (e) {
+    ok = checkCredentials(body.username, body.password);
+  } catch {
     return json(res, 500, { error: "Server belum dikonfigurasi" });
   }
-  if (!ok) return json(res, 401, { error: "Password salah" });
+  if (!ok) return json(res, 401, { error: "Username atau password salah" });
 
-  const s = createSession();
+  const s = createSession(body.username);
   return json(
     res,
     200,
-    { ok: true, csrf: s.csrf, exp: s.exp },
+    { ok: true, csrf: s.csrf, exp: s.exp, user: s.user },
     { "Set-Cookie": sessionCookie(s.token) }
   );
 }

@@ -105,36 +105,47 @@ dengan HTML yang ada (dijaga oleh `npm run verify`).
 
 ## 4. Halaman Admin
 
-**URL:** `/admin` (hanya aktif di Vercel; di GitHub Pages `/api` tidak ada).
+**URL:** `/admin` (hanya aktif di Vercel; di GitHub Pages `/api` tidak ada — admin menampilkan peringatan).
 
 ### Login
-- Satu password, disimpan sebagai `ADMIN_PASSWORD` di environment Vercel.
-- Sesi = cookie `dts_admin` (HMAC-SHA256, `HttpOnly`, `Secure`, `SameSite=Strict`, 12 jam).
+- **Username + password**, disimpan sebagai `ADMIN_USERNAME` dan `ADMIN_PASSWORD` di
+  environment Vercel. Kesalahan username/password memunculkan pesan seragam
+  `"Username atau password salah"` (tidak membocorkan mana yang salah).
+- Sesi = cookie `dts_admin` (HMAC-SHA256, `HttpOnly`, `Secure`, `SameSite=Strict`, 12 jam);
+  payload menyimpan username.
 - Percobaan login dibatasi 5×/menit per IP.
+- Input password **tidak pernah di-disable** — kegagalan `/api/session` (mis. dibuka dari
+  GitHub Pages) hanya menampilkan banner "bukan versi Vercel".
 
-### Tab yang tersedia
+### Panel yang tersedia
 
-| Tab | Yang bisa diubah |
+| Panel | Yang bisa diubah |
 | --- | --- |
+| **Video Hero** | Ganti video latar (MP4/WebM, maks 50 MB) langsung ke Blob, atau kembalikan ke video bawaan |
+| **Galeri** | Tambah foto (multi, maks 5 MB), edit gaya tiap foto, hapus, urutkan (drag) |
+| **Gaya Tato** | Tambah/hapus gaya, ubah slug/nama/deskripsi, tambah/hapus/urutkan foto tiap gaya (foto pertama = sampul) |
 | **Lokasi** | Foto tampak depan (ganti/hapus), alt, caption, alamat, jam buka, CID Google Maps, patokan jalan |
-| **Galeri (Ring)** | Tambah/hapus/urutkan (drag) foto strip hero & slideshow About |
-| **Kartu Gaya** | Nama, deskripsi, dan daftar foto tiap gaya (foto pertama = sampul kartu) |
-| **Statistik & Marquee** | Label/angka statistik, baris teks berjalan |
-| **Kontak** | Label + URL tiap kanal di modal Book |
+| **Statistik** | Label, angka, suffix tiap baris; tambah/hapus/urutkan |
+| **Marquee** | Baris teks berjalan; tambah/hapus/urutkan |
+| **Kontak** | Platform, label tombol, URL tiap kanal di modal Book |
 
-### Alur simpan
-1. Pilih/ganti foto → otomatis di-resize di browser (maks 1600 px, JPEG q82) lalu diunggah
-   ke GitHub sebagai blob (`/api/upload`), nama file memakai hash isi (cache-bust otomatis).
-2. Klik **Pratinjau perbedaan** untuk melihat ringkasan perubahan (tidak menyimpan).
-3. Klik **Terbitkan perubahan** → satu commit berisi `site.json`, foto baru/terhapus,
-   dan HTML hasil render.
-4. Vercel & GitHub Pages deploy otomatis dalam ±1–2 menit.
+### Aturan & alur simpan
+- Gaya yang masih dipakai foto galeri **tidak bisa dihapus** (diblokir + pesan).
+  Mengganti `slug` gaya otomatis memperbarui referensi foto galeri.
+- Foto/video diunggah langsung dari browser ke **Vercel Blob**
+  (`/api/blob-upload`, token `vercel_blob_client_*`) — melewati limit body 4.5 MB
+  function di Vercel, kualitas tetap asli.
+- Blob yang sudah diunggah tapi tidak jadi dipakai (dikembalikan/diganti) akan
+  **dibersihkan otomatis saat Terbitkan**.
+- Klik **Pratinjau** untuk ringkasan (tidak menyimpan). Klik **Terbitkan** →
+  satu commit berisi `site.json` + HTML hasil render; Vercel & GitHub Pages
+  deploy otomatis dalam ±1–2 menit.
 
-### Batasan
-- Satu file foto maksimal **3 MB** (setelah resize biasanya jauh di bawah).
-- Format: **JPEG, PNG, WebP** (divalidasi dari magic bytes, bukan dari nama file).
-- Path hanya boleh di dalam `assets/img/`.
-- Upload & publish butuh header `X-CSRF` dari sesi aktif.
+### Batasan upload
+- Foto: **JPEG, PNG, WebP**, maks **5 MB** (divalidasi magic bytes via content-type token).
+- Video: **MP4, WebM**, maks **50 MB**.
+- Path blob hanya di dalam `media/...` (mengandung slug, random-suffix,
+  cache-control 30 hari). Upload & publish butuh header `X-CSRF` dari sesi aktif.
 
 ---
 
@@ -142,13 +153,13 @@ dengan HTML yang ada (dijaga oleh `npm run verify`).
 
 | Endpoint | Method | Fungsi |
 | --- | --- | --- |
-| `/api/session` | GET | Cek sesi; balikan `{ ok, csrf, exp }` |
-| `/api/login` | POST | `{ password }` → set cookie sesi |
+| `/api/session` | GET | Cek sesi; balikan `{ ok, csrf, exp, user }` |
+| `/api/login` | POST | `{ username, password }` → set cookie sesi |
 | `/api/logout` | POST | Hapus cookie sesi |
-| `/api/upload` | POST | `{ base64, folder, slug }` → `{ sha, path, type }` |
+| `/api/blob-upload` | POST | Token `vercel_blob_client_*` untuk upload langsung ke Blob |
 | `/api/publish` | POST | `{ site, files[], deletes[], preview? }` → commit atau pratinjau |
 
-Semua endpoint `no-store`. `upload`/`publish` wajib sesi + CSRF.
+Semua endpoint `no-store`. `blob-upload`/`publish` wajib sesi + CSRF.
 
 ---
 
@@ -156,11 +167,17 @@ Semua endpoint `no-store`. `upload`/`publish` wajib sesi + CSRF.
 
 | Nama | Keterangan |
 | --- | --- |
+| `ADMIN_USERNAME` | Username login admin (`admindianatattoostudio`) |
 | `ADMIN_PASSWORD` | Password login admin |
 | `ADMIN_SESSION_SECRET` | Kunci HMAC sesi (≥ 32 karakter) |
 | `GITHUB_TOKEN` | Token dengan akses `contents: write` ke repo ini |
 | `GITHUB_REPO` | `rafie110594/DianaTattoStudio` |
 | `GITHUB_BRANCH` | `main` |
+| `BLOB_READ_WRITE_TOKEN` | Token Blob store `diana-media` (`store_PejdNtNdO8KBPJi2`) |
+
+Store Blob diakses publik; foto/video live disajikan dari
+`https://<store>.public.blob.vercel-storage.com`. File media repo tetap utuh
+(`assets/img/*`, `assets/video/cinematic.mp4`) dan dipilotkan lewat `site.json`.
 
 Mengubah env var **tidak** langsung berlaku — perlu deploy ulang
 (`git commit` kosong / `vercel --prod`) agar function memuat nilai baru.
