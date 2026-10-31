@@ -5,7 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Admin &mdash; Diana Tattoo Studio</title>
-<link rel="stylesheet" href="admin.css">
+<script>
+/* GitHub Pages is static: /api does not exist there, so send admin to Vercel. */
+if (location.hostname.slice(-10) === "github.io") {
+  location.replace("https://diana-tatto-studio.vercel.app/admin/");
+}
+</script>
+<link rel="stylesheet" href="admin.css?v=2">
 </head>
 <body class="admin">
 
@@ -168,6 +174,6 @@
     </footer>
   </main>
 
-<script type="module" src="admin.js"></script>
+<script type="module" src="admin.js?v=2"></script>
 </body>
 </html>
