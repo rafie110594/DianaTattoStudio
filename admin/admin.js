@@ -25,6 +25,15 @@
   const esc = (v) =>
     String(v ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+  /* repo-relative media paths (assets/...) must resolve from the site root,
+     because the admin page itself lives under /admin/ */
+  const mediaSrc = (src) => {
+    const s = String(src ?? "");
+    if (!s) return "";
+    if (/^(https?:|data:|blob:|\/)/i.test(s)) return s;
+    return "/" + s.replace(/^\.\//, "");
+  };
+
   const clone = (v) => JSON.parse(JSON.stringify(v));
 
   const setStatus = (msg, kind = "") => {
@@ -299,7 +308,8 @@
     const el = $("#heroPreview");
     $("#heroSrc").textContent = v?.src || "(tidak ada video)";
     if (v?.src) {
-      if (el.getAttribute("src") !== v.src) el.src = v.src;
+      const url = mediaSrc(v.src);
+      if (el.getAttribute("src") !== url) el.src = url;
       el.hidden = false;
     } else {
       el.removeAttribute("src");
@@ -349,7 +359,7 @@
       li.draggable = true;
       li.dataset.idx = String(i);
       li.innerHTML = `
-        <img src="${esc(g.src)}" alt="" loading="lazy">
+        <img src="${esc(mediaSrc(g.src))}" alt="" loading="lazy">
         <div class="tile__body">
           <span class="tile__slug">${esc(g.slug)}</span>
           <span class="tile__meta">${esc(g.src)}</span>
@@ -535,7 +545,7 @@
         ph.draggable = true;
         ph.dataset.idx = String(pi);
         ph.innerHTML = `
-          <img src="${esc(p.src)}" alt="" loading="lazy">
+          <img src="${esc(mediaSrc(p.src))}" alt="" loading="lazy">
           ${pi === 0 ? '<span class="ph__cover">Sampul</span>' : ""}
           <div class="ph__acts">
             <button data-act="up" title="Naik">↑</button>
@@ -622,7 +632,7 @@
   /* ---------------- panel: location ---------------- */
   function renderLocation() {
     const loc = state.site.location;
-    $("#locPhotoPreview").src = loc.photo?.src || "";
+    $("#locPhotoPreview").src = mediaSrc(loc.photo?.src) || "";
     $("#locPhotoAlt").value = loc.photo?.alt || "";
     $("#locCaption").value = loc.caption || "";
     $("#locAddress").value = loc.address || "";
