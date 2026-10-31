@@ -6,14 +6,12 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
   const BLOB_PUT = "https://vercel.com/api/blob/";
-  const VERCEL_ADMIN = "https://diana-tatto-studio.vercel.app/admin";
 
   const state = {
     site: null,
     original: null,
     csrf: "",
     user: "",
-    onVercel: true,
     /* blob URLs uploaded this session — unreferenced ones are cleaned on publish */
     uploaded: new Set()
   };
@@ -121,28 +119,18 @@
   async function boot() {
     $("#loginUsername").value = localStorage.getItem("dts_admin_user") || "";
 
-    let apiReachable = false;
     try {
-      const res = await fetch("/api/session", { credentials: "same-origin", cache: "no-store" });
-      const type = res.headers.get("content-type") || "";
-      if (res.ok && type.includes("application/json")) {
-        apiReachable = true;
-        const s = await res.json();
-        if (s.ok) {
-          state.csrf = s.csrf;
-          state.user = s.user || "";
-          await loadSite();
-          showApp();
-          return;
-        }
+      const s = await api("/api/session");
+      if (s.ok) {
+        state.csrf = s.csrf;
+        state.user = s.user || "";
+        await loadSite();
+        showApp();
+        return;
       }
     } catch {
-      apiReachable = false;
+      /* /api is only served by the Vercel deployment */
     }
-
-    /* /api only exists on the Vercel deployment (GitHub Pages answers 404) */
-    state.onVercel = apiReachable;
-    if (!apiReachable) $("#hostWarning").hidden = false;
     showLogin();
   }
 
