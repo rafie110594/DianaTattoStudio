@@ -7,7 +7,7 @@
 <title>Admin &mdash; Diana Tattoo Studio</title>
 <script>
 /* GitHub Pages is static: /api does not exist there, so send admin to Vercel. */
-if (location.hostname.slice(-10) === "github.io") {
+if (location.hostname.endsWith("github.io")) {
   location.replace("https://diana-tatto-studio.vercel.app/admin/");
 }
 </script>
