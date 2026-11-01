@@ -3,6 +3,37 @@
 document.addEventListener("DOMContentLoaded", () => {
   const head = document.querySelector(".site-head");
 
+  /* ---------- loader pembuka (hanya beranda) ---------- */
+  const loader = document.querySelector(".loader");
+
+  if (loader) {
+    const MIN_VISIBLE = 1200; // ms, agar animasi logo & teks selesai
+    const startedAt = Date.now();
+    let closed = false;
+
+    const closeLoader = () => {
+      if (closed) return;
+      closed = true;
+
+      const elapsed = Date.now() - startedAt;
+      const wait = Math.max(0, MIN_VISIBLE - elapsed);
+
+      window.setTimeout(() => {
+        loader.classList.add("is-done");
+        loader.setAttribute("aria-hidden", "true");
+        window.setTimeout(() => loader.remove(), 600);
+      }, wait);
+    };
+
+    if (document.readyState === "complete") {
+      closeLoader();
+    } else {
+      window.addEventListener("load", closeLoader, { once: true });
+      /* jaring pengaman: jangan biarkan overlay menahan halaman */
+      window.setTimeout(closeLoader, 6000);
+    }
+  }
+
   /* data situs (di-generate dari content/site.json oleh lib/render.mjs) */
   const DATA = (window.__SITE__ && typeof window.__SITE__ === "object") ? window.__SITE__ : {};
   const SINCE = (DATA.meta && DATA.meta.since) || 2022;

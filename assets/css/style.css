@@ -520,10 +520,104 @@ color: color-mix(in srgb, var(--bone) 72%, transparent);
   }
 }
 
+/* ---------- loader pembuka (hanya beranda) ----------
+   Ditampilkan hanya jika JS aktif (html.js) agar tidak pernah
+   menutupi halaman ketika JS gagal dimuat. */
+.loader { display: none; }
+
+html.js .loader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(110% 80% at 50% 42%, rgba(42, 33, 26, .92) 0%, rgba(12, 9, 7, .97) 55%, var(--night) 100%);
+  opacity: 1;
+  transition: opacity .5s var(--ease);
+  /* jaring pengaman CSS: bila main.js gagal, overlay tidak menahan halaman */
+  animation: loader-failsafe .4s linear 8s forwards;
+}
+
+.loader.is-done,
+html.js .loader.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader__inner {
+  display: grid;
+  justify-items: center;
+  gap: 1.4rem;
+  padding: 1rem;
+}
+
+.loader__disc {
+  display: grid;
+  place-items: center;
+  width: clamp(6.5rem, 20vw, 9.5rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 9%;
+  background: radial-gradient(circle at 50% 32%, #fffdf6 0%, var(--bone) 58%, #e7dcc4 100%);
+  border: 1px solid color-mix(in srgb, var(--gold-light) 65%, transparent);
+  box-shadow:
+    0 0 0 5px color-mix(in srgb, var(--gold-light) 9%, transparent),
+    0 0 34px color-mix(in srgb, var(--gold-light) 26%, transparent),
+    0 16px 40px rgba(0, 0, 0, .55);
+  animation: loader-disc 1s var(--ease) both;
+}
+
+.loader__disc img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.loader__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .34rem;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.4vw, 1.6rem);
+  line-height: 1;
+  letter-spacing: .04em;
+  color: var(--bone);
+  opacity: 0;
+  transform: translate3d(0, .7rem, 0);
+  animation: loader-text .75s var(--ease) .3s both;
+}
+
+.loader__text span {
+  font-family: var(--font-sans);
+  font-size: .5rem;
+  font-weight: 600;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--bone) 70%, transparent);
+}
+
+@keyframes loader-disc {
+  from { opacity: 0; transform: scale(.35); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes loader-text {
+  from { opacity: 0; transform: translate3d(0, .7rem, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes loader-failsafe {
+  to { opacity: 0; visibility: hidden; }
+}
+
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  .loader__disc, .loader__text { animation: none; opacity: 1; transform: none; }
 }
 
 /* ---------- cursor glow (penerang bulat) ---------- */
