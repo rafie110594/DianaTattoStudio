@@ -184,6 +184,62 @@ Mengubah env var **tidak** langsung berlaku — perlu deploy ulang
 
 Untuk pengembangan lokal buat `.env.local` (sudah di-.gitignore) dengan isi yang sama.
 
+### Scope per environment
+
+| Variable | Production | Preview | Development |
+| --- | --- | --- | --- |
+| `ADMIN_USERNAME` | ya | ya | — |
+| `ADMIN_PASSWORD` | ya | ya | — |
+| `ADMIN_SESSION_SECRET` | ya | ya | — |
+| `GITHUB_TOKEN` / `GITHUB_REPO` / `GITHUB_BRANCH` | ya | — | — |
+| `BLOB_READ_WRITE_TOKEN` / `BLOB_STORE_ID` | ya | ya | ya |
+
+Tanpa `ADMIN_SESSION_SECRET` di suatu environment, `secret()` melempar error dan
+login di environment itu selalu gagal (500 "Server belum dikonfigurasi").
+
+### Prosedur rotasi kredensial admin
+
+Jalankan dari root repo (CLI sudah login sebagai pemilik project):
+
+```powershell
+$u = "username-baru"
+$p = "password-baru"
+
+vercel env add ADMIN_USERNAME production --sensitive --force --value $u
+vercel env add ADMIN_USERNAME preview    --sensitive --force --value $u
+vercel env add ADMIN_PASSWORD production --sensitive --force --value $p
+vercel env add ADMIN_PASSWORD preview    --sensitive --force --value $p
+
+# rotasi secret sesi (≥ 32 karakter) -> semua sesi aktif langsung logout
+$s = -join ((1..64) | ForEach-Object { "0123456789abcdef"[(Get-Random -Maximum 16)] })
+vercel env add ADMIN_SESSION_SECRET production --sensitive --force --value $s
+vercel env add ADMIN_SESSION_SECRET preview    --sensitive --force --value $s
+
+# env var di-bake saat build: wajib redeploy
+vercel redeploy <deployment-produksi-terakhir> --environment production
+```
+
+Verifikasi setelah redeploy:
+
+```powershell
+# kredensial baru -> 200 + Set-Cookie dts_admin
+# kredensial lama -> 401
+# POST /api/publish { preview: true } pakai sesi baru -> 200 (uji GITHUB_REPO/GITHUB_BRANCH tanpa commit)
+# GET /admin/ -> cek header CSP, X-Frame-Options: DENY, X-Robots-Tag
+```
+
+Catatan keamanan:
+
+- `GITHUB_REPO` / `GITHUB_BRANCH` bertipe **Config**, sehingga `vercel env ls`
+  bisa menampilkan prefix yang menyesatkan (kolom value kadang meminjam nilai
+  var lain). Cek nilai sebenarnya dengan `vercel env pull`.
+- Username admin lama pernah tertulis di `mcs.md` pada commit `1f9b9a2` dan
+  `0d86788` (repo publik). Menghapus file di HEAD tidak menghapus riwayat —
+  itulah alasan username dirotasi. Jangan pernah menulis username/password ke
+  file yang di-commit.
+- File runbook ini berada di `_docs/` yang dikecualikan `.vercelignore` dan
+  diabaikan Jekyll GitHub Pages (folder berawalan `_`).
+
 ---
 
 ## 7. Perintah pengembangan
