@@ -315,6 +315,18 @@
           "h": 1152
         }
       ]
+    },
+    {
+      "slug": "asu",
+      "name": "asu",
+      "blurb": "p",
+      "photos": [
+        {
+          "src": "https://pejdntndo8kbpji2.public.blob.vercel-storage.com/media/styles/asu/asu-rSJHXLte66Pwu9DSYZpqEvmR8lHrTq.jpg",
+          "w": 1200,
+          "h": 1600
+        }
+      ]
     }
   ],
   "location": {
