@@ -1898,7 +1898,7 @@ body.page-location::after {
 
 @media (max-width: 820px) {
   .about-intro { grid-template-columns: 1fr; }
-  .about-intro__figure { max-width: 26rem; margin-inline: auto; }
+  .about-intro__figure { width: 100%; max-width: 26rem; margin-inline: auto; }
   .about-values { grid-template-columns: 1fr 1fr; }
 }
 
