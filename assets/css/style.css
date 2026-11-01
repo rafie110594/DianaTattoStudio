@@ -337,32 +337,65 @@ color: color-mix(in srgb, var(--bone) 72%, transparent);
   bottom: 4.5vh;
   z-index: 3;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.6rem;
+  gap: .85rem;
   padding-inline: 1rem;
+  text-align: center;
 }
 
-.hero__link {
+/* label harga: teks emas dengan glow lembut di belakangnya */
+.hero__price {
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
-  align-items: center;
-  gap: .55rem;
-  padding-bottom: .35rem;
-  border-bottom: 1px solid var(--hair);
+  align-items: baseline;
+  gap: .5em;
   font-family: var(--font-sans);
-  font-size: .68rem;
+  font-size: clamp(.62rem, .8vw, .72rem);
   font-weight: 600;
-  letter-spacing: .18em;
+  letter-spacing: .24em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--bone) 85%, transparent);
-  transition: color .35s var(--ease), border-color .35s var(--ease);
+  color: color-mix(in srgb, var(--bone) 72%, var(--gold-mid));
 }
-.hero__link span { transition: transform .35s var(--ease); }
-.hero__link:hover,
-.hero__link:focus-visible { color: var(--bone); border-bottom-color: var(--hair); }
-.hero__link:hover span,
-.hero__link:focus-visible span { transform: translateX(.28rem); }
+
+.hero__price::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: -1;
+  width: clamp(15rem, 26vw, 24rem);
+  height: clamp(5rem, 8vw, 8rem);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--gold-light) 32%, transparent) 0%,
+    color-mix(in srgb, var(--gold-mid) 15%, transparent) 44%,
+    transparent 72%
+  );
+  filter: blur(18px);
+  pointer-events: none;
+  animation: hero-price-glow 5.5s ease-in-out infinite;
+}
+
+.hero__price span {
+  background: var(--gold-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.6em;
+  letter-spacing: .12em;
+  filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--gold-light) 40%, transparent));
+}
+
+@keyframes hero-price-glow {
+  0%, 100% { opacity: .62; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: 1;   transform: translate(-50%, -50%) scale(1.08); }
+}
 
 /* ---------- galeri berjalan (foto mengalir ke kiri) ----------
    Strip kartu lurus (tanpa kemiringan). Kartu mengalir ke kiri
@@ -459,7 +492,8 @@ color: color-mix(in srgb, var(--bone) 72%, transparent);
   .hero__content { top: calc(var(--head-h) + 3.4vh); }
   .hero h1 { font-size: clamp(1.6rem, 7.5vw, 2.4rem); }
   .hero__sub { font-size: .88rem; }
-  .hero__cta { bottom: 3.4vh; flex-direction: column; gap: .9rem; }
+  .hero__cta { bottom: 3.4vh; gap: .7rem; }
+  .hero__price { font-size: .6rem; letter-spacing: .2em; }
   .arc-strip { top: 57%; }
   .arc-card img { filter: grayscale(.35) contrast(1.07) brightness(1.3); }
 }
