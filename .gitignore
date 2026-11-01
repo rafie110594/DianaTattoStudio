@@ -18,6 +18,7 @@ assets/img/about/about-custom.jpg
 
 # Vercel
 .vercel/
+.env
 .env.local
 .env.*.local
 node_modules/

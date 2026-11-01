@@ -1,5 +1,5 @@
 import { handleUpload } from "@vercel/blob/client";
-import { sessionFromRequest } from "../lib/auth.mjs";
+import { sessionFromRequest } from "./_lib/auth.mjs";
 
 const MAX_IMAGE = 5 * 1024 * 1024;
 const MAX_VIDEO = 50 * 1024 * 1024;

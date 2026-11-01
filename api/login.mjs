@@ -1,4 +1,4 @@
-import { createSession, sessionCookie, checkCredentials, rateLimit, clientIp } from "../lib/auth.mjs";
+import { createSession, sessionCookie, checkCredentials, rateLimit, clientIp } from "./_lib/auth.mjs";
 
 const json = (res, code, body, headers = {}) => {
   res.statusCode = code;

@@ -499,7 +499,7 @@
           <label class="field"><span>Nama</span><input type="text" data-k="name" value="${esc(s.name)}" maxlength="40"></label>
           <button class="btn btn--danger btn--sm" data-act="delstyle">Hapus gaya</button>
         </div>
-        <label class="field" style="margin-top:.6rem"><span>Deskripsi</span><input type="text" data-k="blurb" value="${esc(s.blurb)}" maxlength="80"></label>
+        <label class="field field--mt"><span>Deskripsi</span><input type="text" data-k="blurb" value="${esc(s.blurb)}" maxlength="80"></label>
         <div class="style-ed__photos"></div>
         <div class="btnrow">
           <label class="btn btn--ghost btn--sm file-btn">Tambah foto<input type="file" data-add="${si}" accept="image/jpeg,image/png,image/webp" hidden></label>

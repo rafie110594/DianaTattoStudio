@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 export const PAGES = ["index.html", "location.html"];
 
 const load = (p) => readFileSync(join(ROOT, p), "utf8");

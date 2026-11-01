@@ -59,7 +59,7 @@ content/site.json
                                   → Vercel & GH Pages deploy otomatis
 ```
 
-`lib/render.mjs` menulis ulang **hanya blok konten** di HTML (marquee, stats, arc, lokasi).
+`api/_lib/render.mjs` menulis ulang **hanya blok konten** di HTML (marquee, stats, arc, lokasi).
 Blok dikenali dari tag pembukanya, bukan dari nomor baris, sehingga tetap aman meski
 indentasi atau line-ending berubah. Hasil render untuk data saat ini **byte-identik**
 dengan HTML yang ada (dijaga oleh `npm run verify`).
@@ -167,13 +167,13 @@ Semua endpoint `no-store`. `blob-upload`/`publish` wajib sesi + CSRF.
 
 | Nama | Keterangan |
 | --- | --- |
-| `ADMIN_USERNAME` | Username login admin (`admindianatattoostudio`) |
+| `ADMIN_USERNAME` | Username login admin (hanya di dashboard Vercel — jangan ditulis di repo) |
 | `ADMIN_PASSWORD` | Password login admin |
 | `ADMIN_SESSION_SECRET` | Kunci HMAC sesi (≥ 32 karakter) |
 | `GITHUB_TOKEN` | Token dengan akses `contents: write` ke repo ini |
 | `GITHUB_REPO` | `rafie110594/DianaTattoStudio` |
 | `GITHUB_BRANCH` | `main` |
-| `BLOB_READ_WRITE_TOKEN` | Token Blob store `diana-media` (`store_PejdNtNdO8KBPJi2`) |
+| `BLOB_READ_WRITE_TOKEN` | Token Blob store `diana-media` (ID store di dashboard Vercel) |
 
 Store Blob diakses publik; foto/video live disajikan dari
 `https://<store>.public.blob.vercel-storage.com`. File media repo tetap utuh

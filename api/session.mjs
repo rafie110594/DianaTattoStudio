@@ -1,4 +1,4 @@
-import { sessionFromRequest } from "../lib/auth.mjs";
+import { sessionFromRequest } from "./_lib/auth.mjs";
 
 export default async function handler(req, res) {
   res.statusCode = 200;

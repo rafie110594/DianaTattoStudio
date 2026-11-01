@@ -14,4 +14,10 @@ assets/img/about/about-custom.jpg
 .git/
 node_modules/
 .vercel/
+.env
 .env.local
+.env.*.local
+# internal runbook + build tooling must never be served publicly
+/_docs/
+/scripts/
+/qa-*.mjs

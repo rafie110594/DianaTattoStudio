@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from "node:fs";
-import { renderSite } from "../lib/render.mjs";
+import { renderSite } from "../api/_lib/render.mjs";
 
 const site = JSON.parse(readFileSync("content/site.json", "utf8"));
 const original = {

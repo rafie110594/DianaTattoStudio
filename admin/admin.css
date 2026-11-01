@@ -48,6 +48,7 @@ code, .mono { font-family: ui-monospace, Consolas, monospace; font-size: .8em; c
 
 /* ---------- inputs ---------- */
 .field { display: grid; gap: .32rem; }
+.field--mt { margin-top: .6rem; }
 .field > span { color: var(--mut); font-size: .82rem; }
 input[type="text"], input[type="password"], input[type="number"], textarea, select {
   background: var(--panel-2); color: var(--txt); border: 1px solid var(--line);

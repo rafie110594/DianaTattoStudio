@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
-import { sessionFromRequest, requireCsrf } from "../lib/auth.mjs";
-import { createBlob, contentHash } from "../lib/github.mjs";
+import { sessionFromRequest, requireCsrf } from "./_lib/auth.mjs";
+import { createBlob, contentHash } from "./_lib/github.mjs";
 
 function detect(buf) {
   if (buf.length < 12) return null;

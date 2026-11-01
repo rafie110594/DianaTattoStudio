@@ -97,7 +97,8 @@ export function adminUsername() {
 
 export function requireCsrf(req, session) {
   const header = req.headers["x-csrf"] || req.headers["X-CSRF"];
-  return Boolean(session && header && session.csrf === header);
+  if (!session || !header) return false;
+  return safeEqual(header, session.csrf);
 }
 
 /* simple in-memory rate limit (per warm lambda instance) */

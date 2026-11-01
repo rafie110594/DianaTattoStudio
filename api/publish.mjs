@@ -1,7 +1,7 @@
-import { sessionFromRequest, requireCsrf } from "../lib/auth.mjs";
-import { validateSite, ValidationError } from "../lib/site-schema.mjs";
-import { renderSite, siteDataScript } from "../lib/render.mjs";
-import { commitFiles, readTextFile, listFiles } from "../lib/github.mjs";
+import { sessionFromRequest, requireCsrf } from "./_lib/auth.mjs";
+import { validateSite, ValidationError } from "./_lib/site-schema.mjs";
+import { renderSite, siteDataScript } from "./_lib/render.mjs";
+import { commitFiles, readTextFile, listFiles } from "./_lib/github.mjs";
 import { del, list } from "@vercel/blob";
 
 const AUTHOR = { name: "Diana Admin", email: "admin@diana-tatto.studio" };
