@@ -183,6 +183,13 @@
       "alt": "",
       "w": 1032,
       "h": 774
+    },
+    {
+      "src": "https://pejdntndo8kbpji2.public.blob.vercel-storage.com/media/gallery/balinese-jRaVaCB0W5aUEJyvEa7REYVSMWjmBA.jpg",
+      "slug": "balinese",
+      "alt": "",
+      "w": 1080,
+      "h": 2340
     }
   ],
   "styles": [
@@ -325,6 +332,18 @@
           "src": "assets/img/styles/shicano/shicano-01.jpg",
           "w": 864,
           "h": 1152
+        }
+      ]
+    },
+    {
+      "slug": "tribal",
+      "name": "Tribal",
+      "blurb": "Jshsgansjs",
+      "photos": [
+        {
+          "src": "https://pejdntndo8kbpji2.public.blob.vercel-storage.com/media/styles/tribal/tribal-mjNTSr2VDSHshyLB5dFAZOs7qkgTa0.jpg",
+          "w": 1200,
+          "h": 1600
         }
       ]
     }
