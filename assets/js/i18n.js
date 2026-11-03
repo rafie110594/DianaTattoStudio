@@ -149,7 +149,11 @@
       btn.classList.toggle("is-active", isActive);
     });
 
-    var group = document.querySelector(".lang-switch");
+    document.querySelectorAll("[data-lang-code]").forEach(function (el) {
+      el.textContent = current.toUpperCase();
+    });
+
+    var group = document.querySelector(".lang-menu__panel");
     if (group) {
       var label = t("ui.lang.group");
       if (label) group.setAttribute("aria-label", label);
@@ -309,6 +313,58 @@
     }
   }
 
+  /* ---------- menu bahasa (dropdown) ---------- */
+
+  var closeLangMenu = null;
+
+  function initLangMenu() {
+    var menu = document.querySelector("[data-lang-menu]");
+    if (!menu) return;
+
+    var toggle = menu.querySelector(".lang-menu__toggle");
+    var panel = menu.querySelector(".lang-menu__panel");
+    if (!toggle || !panel) return;
+
+    function isOpen() { return !panel.hidden; }
+
+    function open() {
+      panel.hidden = false;
+      toggle.setAttribute("aria-expanded", "true");
+      var active = panel.querySelector("[data-lang-btn].is-active");
+      if (active) active.focus();
+    }
+
+    function close(returnFocus) {
+      if (panel.hidden) return;
+      panel.hidden = true;
+      toggle.setAttribute("aria-expanded", "false");
+      if (returnFocus) toggle.focus();
+    }
+
+    closeLangMenu = close;
+
+    toggle.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (isOpen()) close(true);
+      else open();
+    });
+
+    panel.addEventListener("click", function (e) {
+      if (!e.target.closest("[data-lang-close]")) return;
+      e.preventDefault();
+      close(true);
+    });
+
+    document.addEventListener("click", function (e) {
+      if (isOpen() && !menu.contains(e.target)) close(false);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && isOpen()) close(true);
+    });
+  }
+
   function init() {
     /* simpan teks asli SEBELUM bahasa pertama diterapkan,
        supaya kembali ke ID memulihkan teks asli (termasuk hasil render) */
@@ -322,7 +378,10 @@
       if (!btn) return;
       e.preventDefault();
       setLang(btn.dataset.langBtn);
+      if (closeLangMenu) closeLangMenu(true);
     });
+
+    initLangMenu();
   }
 
   window.I18N = {

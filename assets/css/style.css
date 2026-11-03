@@ -2592,55 +2592,186 @@ body.page-location::after {
   .site-head__end .btn--block { display: none; }
 }
 
-/* ---------- pemilih bahasa (ID · EN · JA) ---------- */
-.lang-switch {
-  display: inline-flex;
-  align-items: stretch;
-  height: 2rem;
-  border: 1px solid var(--hair);
-  border-radius: .2rem;
-  overflow: hidden;
+/* ---------- pemilih bahasa (dropdown ID / EN / JA) ---------- */
+.lang-menu {
+  position: relative;
   flex: 0 0 auto;
 }
 
-.lang-switch__btn {
+.lang-menu__toggle {
   appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .34rem;
+  height: 2rem;
   margin: 0;
-  padding: 0 .48rem;
-  border: 0;
+  padding: 0 .5rem;
+  border: 1px solid var(--hair);
+  border-radius: .2rem;
   background: transparent;
-  color: color-mix(in srgb, var(--bone) 62%, transparent);
+  color: color-mix(in srgb, var(--bone) 72%, transparent);
   font-family: var(--font-sans);
   font-size: .58rem;
   font-weight: 600;
   letter-spacing: .1em;
   line-height: 1;
   cursor: pointer;
-  transition: color .25s var(--ease), background .25s var(--ease);
+  transition: color .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
 }
 
-.lang-switch__btn + .lang-switch__btn {
-  border-left: 1px solid var(--hair);
-}
-
-.lang-switch__btn:hover,
-.lang-switch__btn:focus-visible {
+.lang-menu__toggle:hover,
+.lang-menu__toggle:focus-visible {
   color: var(--bone);
+  border-color: color-mix(in srgb, var(--gold-mid) 45%, var(--hair));
 }
 
-.lang-switch__btn.is-active {
+.lang-menu__toggle[aria-expanded="true"] {
   background: var(--gold-grad-soft);
+  border-color: transparent;
   color: #1b1208;
 }
 
-.lang-switch__btn:focus-visible {
+.lang-menu__toggle:focus-visible {
+  outline: 1px solid var(--gold-light);
+  outline-offset: 2px;
+}
+
+.lang-menu__globe { width: .82rem; height: .82rem; flex: 0 0 auto; }
+.lang-menu__code { font-size: .6rem; letter-spacing: .12em; }
+
+.lang-menu__chev {
+  width: .5rem;
+  height: .5rem;
+  flex: 0 0 auto;
+  opacity: .7;
+  transition: transform .3s var(--ease);
+}
+
+.lang-menu__toggle[aria-expanded="true"] .lang-menu__chev { transform: rotate(180deg); }
+
+.lang-menu__panel {
+  position: absolute;
+  top: calc(100% + .55rem);
+  right: 0;
+  z-index: 70;
+  width: 12.5rem;
+  border: 1px solid var(--hair);
+  border-radius: .25rem;
+  background: #0B0A09;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, .55);
+  overflow: hidden;
+  animation: lang-panel-in .22s var(--ease) both;
+}
+
+.lang-menu__panel[hidden] { display: none; }
+
+@keyframes lang-panel-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+
+.lang-menu__item {
+  appearance: none;
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .6rem;
+  width: 100%;
+  margin: 0;
+  padding: .72rem .85rem;
+  border: 0;
+  background: transparent;
+  color: color-mix(in srgb, var(--bone) 70%, transparent);
+  font-family: var(--font-sans);
+  font-size: .62rem;
+  letter-spacing: .08em;
+  text-align: left;
+  cursor: pointer;
+  transition: color .2s var(--ease), background .2s var(--ease);
+}
+
+.lang-menu__item + .lang-menu__item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: .85rem;
+  left: .85rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--gold-mid) 32%, transparent) 50%,
+    transparent
+  );
+}
+
+.lang-menu__item:hover,
+.lang-menu__item:focus-visible {
+  color: var(--bone);
+  background: color-mix(in srgb, var(--gold-mid) 8%, transparent);
+}
+
+.lang-menu__item:focus-visible {
+  outline: 1px solid var(--gold-light);
+  outline-offset: -2px;
+}
+
+.lang-menu__item.is-active {
+  background: color-mix(in srgb, var(--gold-mid) 10%, transparent);
+  color: var(--gold-light);
+}
+
+.lang-menu__item-code {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+
+.lang-menu__item-name {
+  font-size: .58rem;
+  letter-spacing: .04em;
+  opacity: .72;
+}
+
+/* bar penutup di dasar panel */
+.lang-menu__foot {
+  border-top: 1px solid var(--hair);
+  background: color-mix(in srgb, var(--night) 82%, transparent);
+}
+
+.lang-menu__close {
+  appearance: none;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: .66rem .85rem;
+  border: 0;
+  background: transparent;
+  color: color-mix(in srgb, var(--bone) 52%, transparent);
+  font-family: var(--font-sans);
+  font-size: .56rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .2s var(--ease), background .2s var(--ease);
+}
+
+.lang-menu__close:hover,
+.lang-menu__close:focus-visible {
+  background: color-mix(in srgb, var(--gold-mid) 10%, transparent);
+  color: var(--gold-light);
+}
+
+.lang-menu__close:focus-visible {
   outline: 1px solid var(--gold-light);
   outline-offset: -2px;
 }
 
 /* layar sempit: rapatkan agar muat bersama brand & hamburger */
 @media (max-width: 420px) {
-  .lang-switch__btn { padding: 0 .34rem; font-size: .54rem; letter-spacing: .06em; }
+  .lang-menu__panel { width: min(calc(100vw - 1.5rem), 12.5rem); }
   .site-head { gap: .5rem; }
   .site-head__end { gap: .5rem; }
 }

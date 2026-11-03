@@ -31,6 +31,8 @@ window.__I18N__ = {
     "ui.slideshowAlt": "Karya tato gaya {name} di Diana Tattoo Studio",
     "ui.arcAria": "Lihat gaya {name}",
     "ui.lang.group": "Bahasa",
+    "ui.lang.open": "Ganti bahasa",
+    "ui.lang.close": "Tutup",
 
     "meta.home.title": "Diana Tattoo Studio — Custom Tattoo Bali, sejak 2022",
     "meta.home.description": "Studio tato custom di Bali sejak 2022. Balinese, fine line, Japanese, maoriental, medusa, shicano. Konsultasi gratis, custom-only, dikerjakan artist yang menekuni gayanya.",
@@ -227,6 +229,8 @@ window.__I18N__ = {
     "ui.slideshowAlt": "Tattoo work in the {name} style at Diana Tattoo Studio",
     "ui.arcAria": "View the {name} style",
     "ui.lang.group": "Language",
+    "ui.lang.open": "Change language",
+    "ui.lang.close": "Close",
 
     "meta.home.title": "Diana Tattoo Studio — Custom Tattoo Bali, since 2022",
     "meta.home.description": "A custom tattoo studio in Bali since 2022. Balinese, fine line, Japanese, maoriental, medusa, shicano. Free consultation, custom only, done by artists who live each style.",
@@ -423,6 +427,8 @@ window.__I18N__ = {
     "ui.slideshowAlt": "Diana Tattoo Studioの{name}スタイルのタトゥー作品",
     "ui.arcAria": "{name}スタイルを見る",
     "ui.lang.group": "言語",
+    "ui.lang.open": "言語を切り替える",
+    "ui.lang.close": "閉じる",
 
     "meta.home.title": "Diana Tattoo Studio — バリのカスタムタトゥー、2022年創業",
     "meta.home.description": "2022年創業、バリのカスタムタトゥースタジオ。バリニーズ、ファインライン、ジャパニーズ、マオリオリエンタル、メデューサ、シカーノ。無料カウンセリング、完全オーダーメイド。",

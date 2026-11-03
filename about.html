@@ -32,10 +32,29 @@
   </nav>
 
   <div class="site-head__end">
-    <div class="lang-switch" role="group" aria-label="Bahasa" data-i18n-aria="ui.lang.group">
-      <button class="lang-switch__btn is-active" type="button" data-lang-btn="id" aria-pressed="true" lang="id">ID</button>
-      <button class="lang-switch__btn" type="button" data-lang-btn="en" aria-pressed="false" lang="en">EN</button>
-      <button class="lang-switch__btn" type="button" data-lang-btn="ja" aria-pressed="false" lang="ja">JA</button>
+    <div class="lang-menu" data-lang-menu>
+      <button class="lang-menu__toggle" id="langToggle" type="button" aria-expanded="false" aria-controls="langPanel" aria-label="Ganti bahasa" data-i18n-aria="ui.lang.open">
+        <svg class="lang-menu__globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.6 2.6 2.6 15.4 0 18M12 3c-2.6 2.6-2.6 15.4 0 18"></path></svg>
+        <span class="lang-menu__code" data-lang-code>ID</span>
+        <svg class="lang-menu__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg>
+      </button>
+      <div class="lang-menu__panel" id="langPanel" role="group" aria-label="Bahasa" data-i18n-aria="ui.lang.group" hidden>
+        <button class="lang-menu__item is-active" type="button" data-lang-btn="id" aria-pressed="true" lang="id">
+          <span class="lang-menu__item-code">ID</span>
+          <span class="lang-menu__item-name">Bahasa Indonesia</span>
+        </button>
+        <button class="lang-menu__item" type="button" data-lang-btn="en" aria-pressed="false" lang="en">
+          <span class="lang-menu__item-code">EN</span>
+          <span class="lang-menu__item-name">English</span>
+        </button>
+        <button class="lang-menu__item" type="button" data-lang-btn="ja" aria-pressed="false" lang="ja">
+          <span class="lang-menu__item-code">JA</span>
+          <span class="lang-menu__item-name">日本語</span>
+        </button>
+        <div class="lang-menu__foot">
+          <button class="lang-menu__close" type="button" data-lang-close data-i18n="ui.lang.close">Tutup</button>
+        </div>
+      </div>
     </div>
     <a class="btn btn--gold btn--block btn--sm" href="index.html#book" data-i18n="nav.book">Book a session</a>
     <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Buka menu" data-i18n-aria="ui.nav.open">
