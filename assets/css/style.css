@@ -2591,3 +2591,107 @@ body.page-location::after {
   .nav-toggle { display: flex; }
   .site-head__end .btn--block { display: none; }
 }
+
+/* ---------- pemilih bahasa (ID · EN · JA) ---------- */
+.lang-switch {
+  display: inline-flex;
+  align-items: stretch;
+  height: 2rem;
+  border: 1px solid var(--hair);
+  border-radius: .2rem;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.lang-switch__btn {
+  appearance: none;
+  margin: 0;
+  padding: 0 .48rem;
+  border: 0;
+  background: transparent;
+  color: color-mix(in srgb, var(--bone) 62%, transparent);
+  font-family: var(--font-sans);
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  line-height: 1;
+  cursor: pointer;
+  transition: color .25s var(--ease), background .25s var(--ease);
+}
+
+.lang-switch__btn + .lang-switch__btn {
+  border-left: 1px solid var(--hair);
+}
+
+.lang-switch__btn:hover,
+.lang-switch__btn:focus-visible {
+  color: var(--bone);
+}
+
+.lang-switch__btn.is-active {
+  background: var(--gold-grad-soft);
+  color: #1b1208;
+}
+
+.lang-switch__btn:focus-visible {
+  outline: 1px solid var(--gold-light);
+  outline-offset: -2px;
+}
+
+/* layar sempit: rapatkan agar muat bersama brand & hamburger */
+@media (max-width: 420px) {
+  .lang-switch__btn { padding: 0 .34rem; font-size: .54rem; letter-spacing: .06em; }
+  .site-head { gap: .5rem; }
+  .site-head__end { gap: .5rem; }
+}
+
+/* menu desktop lebih rapat saat pemilih bahasa ikut tampil (1024–1199px) */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .nav { --nav-gap: clamp(.7rem, 1.1vw, 1.2rem); }
+  .nav__link { font-size: .58rem; letter-spacing: .12em; }
+}
+
+/* ---------- tipografi Jepang (fallback font sistem) ---------- */
+:root {
+  --font-jp: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "YuGothic",
+    "Noto Sans JP", "Meiryo", system-ui, sans-serif;
+}
+
+html[lang="ja"] body {
+  font-family: var(--font-jp);
+}
+
+html[lang="ja"] h1,
+html[lang="ja"] h2,
+html[lang="ja"] h3,
+html[lang="ja"] h4,
+html[lang="ja"] .styles__title,
+html[lang="ja"] .about-head__title,
+html[lang="ja"] .hero__content h1 {
+  font-family: var(--font-jp);
+  font-weight: 500;
+  letter-spacing: .02em;
+  line-height: 1.35;
+}
+
+html[lang="ja"] p,
+html[lang="ja"] li {
+  line-height: 1.9;
+}
+
+html[lang="ja"] .nav__link,
+html[lang="ja"] .nav-mobile a,
+html[lang="ja"] .style-card__view,
+html[lang="ja"] .btn {
+  letter-spacing: .06em;
+}
+
+html[lang="ja"] .nav__link,
+html[lang="ja"] .nav-mobile a {
+  text-transform: none;
+}
+
+html[lang="ja"] .brand__name span {
+  letter-spacing: .18em;
+}
+

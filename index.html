@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-page="home">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +10,7 @@
 <meta property="og:title" content="Diana Tattoo Studio — sejak 2022">
 <meta property="og:description" content="Tato custom di Bali. Dibuat sekali, ditanggung seumur hidup.">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="id">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,35 +35,40 @@
 
 <!-- ============ header ============ -->
 <header class="site-head">
-  <a class="brand" href="#home" aria-label="Diana Tattoo Studio — beranda">
+  <a class="brand" href="#home" aria-label="Diana Tattoo Studio — beranda" data-i18n-aria="nav.ariaBrand">
     <img class="brand__mark" src="assets/img/logo.png" alt="" width="200" height="200">
     <span class="brand__name">Diana<span>Tattoo Studio</span></span>
   </a>
 
-  <nav class="nav" aria-label="Utama">
-    <a class="nav__link" href="#tattoo-styles">Tattoo Styles</a>
-    <a class="nav__link" href="hygiene.html">Hygiene Standards</a>
-    <a class="nav__link" href="#about">About Us</a>
-    <a class="nav__link" href="aftercare.html">Tattoo After Care</a>
-    <a class="nav__link" href="#location">Location</a>
+  <nav class="nav" aria-label="Utama" data-i18n-aria="nav.ariaMain">
+    <a class="nav__link" href="#tattoo-styles" data-i18n="nav.styles">Tattoo Styles</a>
+    <a class="nav__link" href="hygiene.html" data-i18n="nav.hygiene">Hygiene Standards</a>
+    <a class="nav__link" href="#about" data-i18n="nav.about">About Us</a>
+    <a class="nav__link" href="aftercare.html" data-i18n="nav.aftercare">Tattoo After Care</a>
+    <a class="nav__link" href="#location" data-i18n="nav.location">Location</a>
   </nav>
 
   <div class="site-head__end">
-    <a class="btn btn--gold btn--block btn--sm" href="#book">Book a session</a>
-    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Buka menu">
+    <div class="lang-switch" role="group" aria-label="Bahasa" data-i18n-aria="ui.lang.group">
+      <button class="lang-switch__btn is-active" type="button" data-lang-btn="id" aria-pressed="true" lang="id">ID</button>
+      <button class="lang-switch__btn" type="button" data-lang-btn="en" aria-pressed="false" lang="en">EN</button>
+      <button class="lang-switch__btn" type="button" data-lang-btn="ja" aria-pressed="false" lang="ja">JA</button>
+    </div>
+    <a class="btn btn--gold btn--block btn--sm" href="#book" data-i18n="nav.book">Book a session</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Buka menu" data-i18n-aria="ui.nav.open">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
 
 <div class="nav-mobile" id="navMenu" data-open="false" aria-hidden="true" inert>
-  <nav aria-label="Menu mobile">
-    <a href="#tattoo-styles">Tattoo Styles</a>
-    <a href="hygiene.html">Hygiene Standards</a>
-    <a href="#about">About Us</a>
-    <a href="aftercare.html">Tattoo After Care</a>
-    <a href="#location">Location</a>
-    <a class="nav-mobile__book" href="#book">Book a session</a>
+  <nav aria-label="Menu mobile" data-i18n-aria="nav.ariaMobile">
+    <a href="#tattoo-styles" data-i18n="nav.styles">Tattoo Styles</a>
+    <a href="hygiene.html" data-i18n="nav.hygiene">Hygiene Standards</a>
+    <a href="#about" data-i18n="nav.about">About Us</a>
+    <a href="aftercare.html" data-i18n="nav.aftercare">Tattoo After Care</a>
+    <a href="#location" data-i18n="nav.location">Location</a>
+    <a class="nav-mobile__book" href="#book" data-i18n="nav.book">Book a session</a>
   </nav>
 </div>
 
@@ -80,8 +86,8 @@
 
     <div class="hero__content">
       <img class="hero__logo" src="assets/img/logo.png" alt="" width="200" height="200" loading="eager">
-      <h1>The Art You&rsquo;ll Wear Forever</h1>
-      <p class="hero__sub">Custom tattoos designed with meaning and crafted with precision. Where personal stories become timeless art.</p>
+      <h1 data-i18n="home.hero.title">The Art You&rsquo;ll Wear Forever</h1>
+      <p class="hero__sub" data-i18n="home.hero.sub">Custom tattoos designed with meaning and crafted with precision. Where personal stories become timeless art.</p>
     </div>
 
     <!-- galeri melengkung: strip foto berjalan ke kiri -->
@@ -110,8 +116,8 @@
     </div>
 
     <div class="hero__cta">
-      <p class="hero__price">Start from <span>IDR 250K</span></p>
-      <a class="btn btn--gold" href="#book">Book a session</a>
+      <p class="hero__price" data-i18n-html="home.hero.price">Start from <span>IDR 250K</span></p>
+      <a class="btn btn--gold" href="#book" data-i18n="nav.book">Book a session</a>
     </div>
 
     <div class="hero__edge" aria-hidden="true"></div>
@@ -133,7 +139,7 @@
   </div>
 
   <!-- ============ stats ============ -->
-  <section class="stats" aria-label="Ringkasan studio">
+  <section class="stats" aria-label="Ringkasan studio" data-i18n-aria="home.stats.aria">
     <ul class="stats__list">
       <li class="stats__item" data-reveal>
         <span class="stats__num" data-count="2022" data-plain="true">2022</span>
@@ -180,9 +186,9 @@
     </div>
 
     <div class="styles__head">
-      <p class="styles__eyebrow" data-reveal>Our Craft</p>
-      <h2 class="styles__title" id="styles-h" data-reveal data-parallax style="--d:.08s">Tattoo Styles</h2>
-      <p class="styles__sub" data-reveal style="--d:.16s">Setiap gaya punya karakter dan artist yang menekuninya. Pilih satu untuk melihat karya.</p>
+      <p class="styles__eyebrow" data-reveal data-i18n="home.styles.eyebrow">Our Craft</p>
+      <h2 class="styles__title" id="styles-h" data-reveal data-parallax style="--d:.08s" data-i18n="home.styles.title">Tattoo Styles</h2>
+      <p class="styles__sub" data-reveal style="--d:.16s" data-i18n="home.styles.sub">Setiap gaya punya karakter dan artist yang menekuninya. Pilih satu untuk melihat karya.</p>
     </div>
 
     <div class="styles__grid" id="stylesGrid"></div>
@@ -218,17 +224,17 @@
   <!-- ============ about us ============ -->
   <section class="about" id="about" aria-labelledby="about-h">
     <div class="about-head">
-      <p class="about-head__eyebrow" data-reveal>Tentang Kami</p>
-      <h2 class="about-head__title" id="about-h" data-reveal style="--d:.08s">About Us</h2>
-      <p class="about-head__sub" data-reveal style="--d:.16s">Studio tato custom di Bali sejak 2022. Dibuat sekali, ditanggung seumur hidup.</p>
+      <p class="about-head__eyebrow" data-reveal data-i18n="home.about.eyebrow">Tentang Kami</p>
+      <h2 class="about-head__title" id="about-h" data-reveal style="--d:.08s" data-i18n="home.about.title">About Us</h2>
+      <p class="about-head__sub" data-reveal style="--d:.16s" data-i18n="home.about.sub">Studio tato custom di Bali sejak 2022. Dibuat sekali, ditanggung seumur hidup.</p>
     </div>
 
     <div class="about-intro">
       <div class="about-intro__copy" data-reveal>
-        <p>Diana Tattoo Studio lahir dari satu keyakinan sederhana: tato bukan produk massal. Setiap garis seharusnya hanya ada pada satu kulit, dibuat untuk satu cerita, dan dirancang sejak awal bersama pemiliknya.</p>
-        <p>Karena itu kami <strong>custom only</strong> &mdash; tidak ada katalog desain siap pakai, tidak ada karya yang diulang. Semua dimulai dari konsultasi: ide, referensi, penempatan, sampai makna yang ingin dibawa.</p>
-        <p>Enam gaya yang kami tekuni masing-masing punya karakter kuat dan dikerjakan dengan pendekatan yang paling sesuai.</p>
-        <a class="about-link" href="about.html">Selengkapnya tentang kami <span aria-hidden="true">&rarr;</span></a>
+        <p data-i18n="home.about.p1">Diana Tattoo Studio lahir dari satu keyakinan sederhana: tato bukan produk massal. Setiap garis seharusnya hanya ada pada satu kulit, dibuat untuk satu cerita, dan dirancang sejak awal bersama pemiliknya.</p>
+        <p data-i18n-html="home.about.p2">Karena itu kami <strong>custom only</strong> &mdash; tidak ada katalog desain siap pakai, tidak ada karya yang diulang. Semua dimulai dari konsultasi: ide, referensi, penempatan, sampai makna yang ingin dibawa.</p>
+        <p data-i18n="home.about.p3">Enam gaya yang kami tekuni masing-masing punya karakter kuat dan dikerjakan dengan pendekatan yang paling sesuai.</p>
+        <a class="about-link" href="about.html" data-i18n-html="home.about.more">Selengkapnya tentang kami <span aria-hidden="true">&rarr;</span></a>
       </div>
 
       <figure class="about-intro__figure" data-reveal style="--d:.12s">
@@ -242,16 +248,16 @@
 
     <ul class="about-values">
       <li class="about-values__item" data-reveal>
-        <h3 class="about-values__title">Custom Only</h3>
-        <p class="about-values__text">Desain eksklusif untuk satu orang. Tidak ada flash, tidak ada duplikat.</p>
+        <h3 class="about-values__title" data-i18n="home.about.v1.title">Custom Only</h3>
+        <p class="about-values__text" data-i18n="home.about.v1.text">Desain eksklusif untuk satu orang. Tidak ada flash, tidak ada duplikat.</p>
       </li>
       <li class="about-values__item" data-reveal style="--d:.06s">
-        <h3 class="about-values__title">Standar Higiene Medis</h3>
-        <p class="about-values__text">Sterilisasi, bahan sekali pakai, dan prosedur yang sama untuk setiap klien. <a class="about-link" href="hygiene.html">Lihat standar kami</a>.</p>
+        <h3 class="about-values__title" data-i18n="home.about.v2.title">Standar Higiene Medis</h3>
+        <p class="about-values__text" data-i18n-html="home.about.v2.text">Sterilisasi, bahan sekali pakai, dan prosedur yang sama untuk setiap klien. <a class="about-link" href="hygiene.html">Lihat standar kami</a>.</p>
       </li>
       <li class="about-values__item" data-reveal style="--d:.12s">
-        <h3 class="about-values__title">Konsultasi Gratis</h3>
-        <p class="about-values__text">Diskusi ide tanpa biaya dan tanpa komitmen, sampai desainnya benar-benar pas.</p>
+        <h3 class="about-values__title" data-i18n="home.about.v3.title">Konsultasi Gratis</h3>
+        <p class="about-values__text" data-i18n="home.about.v3.text">Diskusi ide tanpa biaya dan tanpa komitmen, sampai desainnya benar-benar pas.</p>
       </li>
     </ul>
   </section>
@@ -259,9 +265,9 @@
   <!-- ============ location ============ -->
   <section class="location" id="location" aria-labelledby="location-h">
     <div class="location-head">
-      <p class="location-head__eyebrow" data-reveal>Temukan Kami</p>
-      <h2 class="location-head__title" id="location-h" data-reveal style="--d:.08s">Location</h2>
-      <p class="location-head__sub" data-reveal style="--d:.16s">Studio kami ada di Bali. Kenali tampak depannya dan ikuti patokan jalan di bawah agar tidak tersasar.</p>
+      <p class="location-head__eyebrow" data-reveal data-i18n="home.location.eyebrow">Temukan Kami</p>
+      <h2 class="location-head__title" id="location-h" data-reveal style="--d:.08s" data-i18n="home.location.title">Location</h2>
+      <p class="location-head__sub" data-reveal style="--d:.16s" data-i18n="home.location.sub">Studio kami ada di Bali. Kenali tampak depannya dan ikuti patokan jalan di bawah agar tidak tersasar.</p>
     </div>
 
     <div class="location-split">
@@ -271,7 +277,7 @@
       </figure>
 
       <div class="location-guide" data-reveal style="--d:.1s">
-        <h3 class="location-guide__title">Patokan Jalan</h3>
+        <h3 class="location-guide__title" data-i18n="home.location.guideTitle">Patokan Jalan</h3>
         <ol class="location-guide__list">
           <li class="location-guide__item">
             <span class="location-guide__num" aria-hidden="true">01</span>
@@ -311,15 +317,17 @@
           title="Peta lokasi Diana Tattoo Studio"
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-          allowfullscreen></iframe>
+          allowfullscreen data-i18n-title="home.location.mapTitle"></iframe>
       </div>
-      <a class="btn btn--gold location-map__btn" href="https://www.google.com/maps?cid=5724227728851520814" target="_blank" rel="noopener">Buka di Google Maps</a>
-      <a class="about-link" href="location.html">Selengkapnya tentang lokasi <span aria-hidden="true">&rarr;</span></a>
+      <a class="btn btn--gold location-map__btn" href="https://www.google.com/maps?cid=5724227728851520814" target="_blank" rel="noopener" data-i18n="home.location.openMaps">Buka di Google Maps</a>
+      <a class="about-link" href="location.html" data-i18n-html="home.location.more">Selengkapnya tentang lokasi <span aria-hidden="true">&rarr;</span></a>
     </div>
   </section>
 </main>
 
 <script src="assets/js/site-data.js" defer></script>
+<script src="assets/js/i18n-data.js" defer></script>
+<script src="assets/js/i18n.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 </body>
 </html>

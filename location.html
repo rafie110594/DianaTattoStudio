@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-page="location">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Location — Diana Tattoo Studio</title>
 <meta name="description" content="Lokasi Diana Tattoo Studio di Bali: foto tampak depan studio, patokan jalan, alamat, jam buka, dan peta yang bisa diklik.">
 <meta name="theme-color" content="#0B0803">
+<meta property="og:locale" content="id">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,35 +18,40 @@
 
 <!-- ============ header ============ -->
 <header class="site-head">
-  <a class="brand" href="index.html" aria-label="Diana Tattoo Studio — beranda">
+  <a class="brand" href="index.html" aria-label="Diana Tattoo Studio — beranda" data-i18n-aria="nav.ariaBrand">
     <img class="brand__mark" src="assets/img/logo.png" alt="" width="200" height="200">
     <span class="brand__name">Diana<span>Tattoo Studio</span></span>
   </a>
 
-  <nav class="nav" aria-label="Utama">
-    <a class="nav__link" href="index.html#tattoo-styles">Tattoo Styles</a>
-    <a class="nav__link" href="hygiene.html">Hygiene Standards</a>
-    <a class="nav__link" href="about.html">About Us</a>
-    <a class="nav__link" href="aftercare.html">Tattoo After Care</a>
-    <a class="nav__link is-current" href="location.html" aria-current="page">Location</a>
+  <nav class="nav" aria-label="Utama" data-i18n-aria="nav.ariaMain">
+    <a class="nav__link" href="index.html#tattoo-styles" data-i18n="nav.styles">Tattoo Styles</a>
+    <a class="nav__link" href="hygiene.html" data-i18n="nav.hygiene">Hygiene Standards</a>
+    <a class="nav__link" href="about.html" data-i18n="nav.about">About Us</a>
+    <a class="nav__link" href="aftercare.html" data-i18n="nav.aftercare">Tattoo After Care</a>
+    <a class="nav__link is-current" href="location.html" aria-current="page" data-i18n="nav.location">Location</a>
   </nav>
 
   <div class="site-head__end">
-    <a class="btn btn--gold btn--block btn--sm" href="index.html#book">Book a session</a>
-    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Buka menu">
+    <div class="lang-switch" role="group" aria-label="Bahasa" data-i18n-aria="ui.lang.group">
+      <button class="lang-switch__btn is-active" type="button" data-lang-btn="id" aria-pressed="true" lang="id">ID</button>
+      <button class="lang-switch__btn" type="button" data-lang-btn="en" aria-pressed="false" lang="en">EN</button>
+      <button class="lang-switch__btn" type="button" data-lang-btn="ja" aria-pressed="false" lang="ja">JA</button>
+    </div>
+    <a class="btn btn--gold btn--block btn--sm" href="index.html#book" data-i18n="nav.book">Book a session</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Buka menu" data-i18n-aria="ui.nav.open">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
 
 <div class="nav-mobile" id="navMenu" data-open="false" aria-hidden="true" inert>
-  <nav aria-label="Menu mobile">
-    <a href="index.html#tattoo-styles">Tattoo Styles</a>
-    <a href="hygiene.html">Hygiene Standards</a>
-    <a href="about.html">About Us</a>
-    <a href="aftercare.html">Tattoo After Care</a>
-    <a href="location.html">Location</a>
-    <a class="nav-mobile__book" href="index.html#book">Book a session</a>
+  <nav aria-label="Menu mobile" data-i18n-aria="nav.ariaMobile">
+    <a href="index.html#tattoo-styles" data-i18n="nav.styles">Tattoo Styles</a>
+    <a href="hygiene.html" data-i18n="nav.hygiene">Hygiene Standards</a>
+    <a href="about.html" data-i18n="nav.about">About Us</a>
+    <a href="aftercare.html" data-i18n="nav.aftercare">Tattoo After Care</a>
+    <a href="location.html" data-i18n="nav.location">Location</a>
+    <a class="nav-mobile__book" href="index.html#book" data-i18n="nav.book">Book a session</a>
   </nav>
 </div>
 
@@ -53,9 +59,9 @@
   <span class="location-page__wm" aria-hidden="true">LOCATION</span>
 
   <div class="location-head">
-    <p class="location-head__eyebrow" data-reveal>Temukan Kami</p>
-    <h1 class="location-head__title" data-reveal style="--d:.08s">Location</h1>
-    <p class="location-head__sub" data-reveal style="--d:.16s">Studio kami ada di Bali. Kenali tampak depannya dan ikuti patokan jalan di bawah agar tidak tersasar.</p>
+    <p class="location-head__eyebrow" data-reveal data-i18n="location.eyebrow">Temukan Kami</p>
+    <h1 class="location-head__title" data-reveal style="--d:.08s" data-i18n="location.title">Location</h1>
+    <p class="location-head__sub" data-reveal style="--d:.16s" data-i18n="location.sub">Studio kami ada di Bali. Kenali tampak depannya dan ikuti patokan jalan di bawah agar tidak tersasar.</p>
   </div>
 
   <div class="location-split">
@@ -65,7 +71,7 @@
     </figure>
 
     <div class="location-guide" data-reveal style="--d:.1s">
-      <h2 class="location-guide__title">Patokan Jalan</h2>
+      <h2 class="location-guide__title" data-i18n="location.guideTitle">Patokan Jalan</h2>
       <ol class="location-guide__list">
         <li class="location-guide__item">
           <span class="location-guide__num" aria-hidden="true">01</span>
@@ -99,25 +105,27 @@
   </div>
 
   <div class="location-map" data-reveal>
-    <h2 class="location-map__title">Peta Lokasi</h2>
+    <h2 class="location-map__title" data-i18n="location.mapTitle">Peta Lokasi</h2>
     <div class="location-map__frame">
       <iframe
         src="https://www.google.com/maps?cid=5724227728851520814&amp;hl=id&amp;output=embed"
         title="Peta lokasi Diana Tattoo Studio"
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
-        allowfullscreen></iframe>
+        allowfullscreen data-i18n-title="location.mapIframeTitle"></iframe>
     </div>
-    <a class="btn btn--gold location-map__btn" href="https://www.google.com/maps?cid=5724227728851520814" target="_blank" rel="noopener">Buka di Google Maps</a>
+    <a class="btn btn--gold location-map__btn" href="https://www.google.com/maps?cid=5724227728851520814" target="_blank" rel="noopener" data-i18n="location.openMaps">Buka di Google Maps</a>
   </div>
 
   <div class="location-page__foot">
-    <a class="btn btn--gold" href="index.html#book">Book a session</a>
-    <a class="location-page__back" href="index.html">Kembali ke beranda</a>
+    <a class="btn btn--gold" href="index.html#book" data-i18n="nav.book">Book a session</a>
+    <a class="location-page__back" href="index.html" data-i18n="location.back">Kembali ke beranda</a>
   </div>
 </main>
 
 <script src="assets/js/site-data.js" defer></script>
+<script src="assets/js/i18n-data.js" defer></script>
+<script src="assets/js/i18n.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 </body>
 </html>

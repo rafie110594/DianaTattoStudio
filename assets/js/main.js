@@ -38,6 +38,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const DATA = (window.__SITE__ && typeof window.__SITE__ === "object") ? window.__SITE__ : {};
   const SINCE = (DATA.meta && DATA.meta.since) || 2022;
 
+  /* ---------- bahasa (assets/js/i18n.js) ---------- */
+  const I18N = window.I18N || {
+    t: (key, fallback) => (fallback == null ? key : fallback),
+    tf: (key, vars) => String(key).replace(/\{(\w+)\}/g, (m, k) => (vars && vars[k] != null ? vars[k] : m)),
+    lang: "id"
+  };
+  const t = (key, fallback) => I18N.t(key, fallback);
+  const tf = (key, vars) => I18N.tf(key, vars);
+  const escAttr = (s) => String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const styleName = (slug, fallback) => t("dyn.styles." + slug + ".name", fallback);
+  const styleBlurb = (slug, fallback) => t("dyn.styles." + slug + ".blurb", fallback);
+  const contactLabel = (key, fallback) => t("dyn.contact." + key, fallback);
+  const pieceLabel = (count) => (count === 1 ? t("ui.piece.one", "piece") : t("ui.piece.many", "pieces"));
+
   /* ---------- menu mobile (hamburger) ---------- */
   const navToggle = document.getElementById("navToggle");
   const navMenu = document.getElementById("navMenu");
@@ -48,10 +63,15 @@ document.addEventListener("DOMContentLoaded", () => {
       navMenu.setAttribute("aria-hidden", String(!open));
       navMenu.toggleAttribute("inert", !open);
       navToggle.setAttribute("aria-expanded", String(open));
-      navToggle.setAttribute("aria-label", open ? "Tutup menu" : "Buka menu");
+      navToggle.setAttribute("aria-label", open ? t("ui.nav.close", "Tutup menu") : t("ui.nav.open", "Buka menu"));
     };
 
     setNav(false);
+
+    document.addEventListener("langchange", () => {
+      navToggle.setAttribute("aria-label",
+        navMenu.dataset.open === "true" ? t("ui.nav.close", "Tutup menu") : t("ui.nav.open", "Buka menu"));
+    });
 
     navToggle.addEventListener("click", () => {
       setNav(navMenu.dataset.open !== "true");
@@ -201,12 +221,12 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ---------- slideshow foto di halaman About Us ---------- */
   const slideshow = document.querySelector("[data-slideshow]");
   if (slideshow) {
-    const styleName = (slug) => {
+    const localName = (slug) => {
       const s = (DATA.styles || []).find((x) => x.slug === slug);
-      return s ? s.name : slug;
+      return styleName(slug, s ? s.name : slug);
     };
     const PHOTOS = (DATA.gallery || [])
-      .map((g) => ({ src: g.src, name: styleName(g.slug) }))
+      .map((g) => ({ src: g.src, slug: g.slug }))
       .filter((p) => p.src);
 
     const imgs = Array.from(slideshow.querySelectorAll(".about-figure__img"));
@@ -220,14 +240,17 @@ document.addEventListener("DOMContentLoaded", () => {
     let timer = null;
 
     const show = (index) => {
+      const photo = PHOTOS[index];
+      if (!photo) return;
+      const name = localName(photo.slug);
       const next = (front + 1) % imgs.length;
       const img = imgs[next];
-      img.src = PHOTOS[index].src;
-      img.alt = `Karya tato gaya ${PHOTOS[index].name} di Diana Tattoo Studio`;
+      img.src = photo.src;
+      img.alt = tf("ui.slideshowAlt", { name });
       img.classList.add("is-active");
       imgs[front].classList.remove("is-active");
       front = next;
-      if (caption) caption.textContent = PHOTOS[index].name;
+      if (caption) caption.textContent = name;
     };
 
     const start = () => {
@@ -250,6 +273,19 @@ document.addEventListener("DOMContentLoaded", () => {
         else start();
       });
     }
+
+    /* sinkronkan alt & caption dengan bahasa aktif (termasuk saat pertama dimuat) */
+    const syncPhotoText = () => {
+      const active = imgs.find((img) => img.classList.contains("is-active")) || imgs[0];
+      const photo = PHOTOS[current];
+      if (!active || !photo) return;
+      const name = localName(photo.slug);
+      active.alt = tf("ui.slideshowAlt", { name });
+      if (caption) caption.textContent = name;
+    };
+
+    syncPhotoText();
+    document.addEventListener("langchange", syncPhotoText);
   }
 
   /* ---------- video: hemat daya saat tab tidak aktif ---------- */
@@ -306,20 +342,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const grid = document.getElementById("stylesGrid");
 
-  if (grid) {
-    grid.innerHTML = STYLES.map((s, i) => `
-      <button class="style-card" type="button" data-slug="${s.slug}" aria-label="Lihat ${s.name}" data-reveal style="--d:${(i * 0.09).toFixed(2)}s">
-        <span class="style-card__view">View</span>
+  const renderStylesGrid = () => {
+    if (!grid) return;
+    grid.innerHTML = STYLES.map((s, i) => {
+      const name = styleName(s.slug, s.name);
+      const blurb = styleBlurb(s.slug, s.blurb);
+      const unit = s.count === 1 ? t("ui.piece.one", "piece") : t("ui.piece.many", "pieces");
+      return `
+      <button class="style-card" type="button" data-slug="${escAttr(s.slug)}" aria-label="${escAttr(tf("ui.style.aria", { name }))}" data-reveal style="--d:${(i * 0.09).toFixed(2)}s">
+        <span class="style-card__view">${t("ui.style.view", "View")}</span>
         <span class="style-card__media">
-          <img src="${imgPath(s, 0)}" alt="${s.name} tattoo" loading="lazy" width="1200" height="1600">
+          <img src="${escAttr(imgPath(s, 0))}" alt="${escAttr(name)} tattoo" loading="lazy" width="1200" height="1600">
           <span class="style-card__meta">
-            <span class="style-card__name">${s.name}</span>
-            <span class="style-card__count">${s.count} ${s.count === 1 ? "piece" : "pieces"} &middot; ${s.blurb}</span>
+            <span class="style-card__name">${escAttr(name)}</span>
+            <span class="style-card__count">${s.count} ${unit} &middot; ${escAttr(blurb)}</span>
           </span>
         </span>
       </button>
-    `).join("");
-  }
+    `;
+    }).join("");
+  };
+
+  renderStylesGrid();
+
+  /* ganti teks kartu di tempat agar animasi reveal tidak diulang */
+  document.addEventListener("langchange", () => {
+    if (!grid) return;
+    grid.querySelectorAll(".style-card").forEach((card) => {
+      const s = STYLES.find((x) => x.slug === card.dataset.slug);
+      if (!s) return;
+      const name = styleName(s.slug, s.name);
+      const blurb = styleBlurb(s.slug, s.blurb);
+      const unit = s.count === 1 ? t("ui.piece.one", "piece") : t("ui.piece.many", "pieces");
+      card.setAttribute("aria-label", tf("ui.style.aria", { name }));
+      const view = card.querySelector(".style-card__view");
+      if (view) view.textContent = t("ui.style.view", "View");
+      const img = card.querySelector("img");
+      if (img) img.alt = `${name} tattoo`;
+      const nameEl = card.querySelector(".style-card__name");
+      if (nameEl) nameEl.textContent = name;
+      const countEl = card.querySelector(".style-card__count");
+      if (countEl) countEl.textContent = `${s.count} ${unit} \u00b7 ${blurb}`;
+    });
+  });
 
   /* panel galeri â€” dibuat sekali, bisa dipicu dari grid maupun foto berjalan */
   {
@@ -333,7 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <h3 class="style-panel__title" id="spTitle"></h3>
             <p class="style-panel__count"></p>
           </div>
-          <button class="style-panel__close" type="button" aria-label="Tutup">&times;</button>
+          <button class="style-panel__close" type="button" aria-label="${escAttr(t("ui.close", "Tutup"))}">&times;</button>
         </div>
         <div class="style-panel__grid"></div>
       </div>`;
@@ -344,17 +409,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const spGrid = panel.querySelector(".style-panel__grid");
     const spClose = panel.querySelector(".style-panel__close");
 
+    let activeStyle = null;
+
     openStylePanel = (style) => {
-      spTitle.textContent = style.name;
-      spCount.textContent = `${style.count} ${style.count === 1 ? "piece" : "pieces"} Â· ${style.blurb}`;
+      activeStyle = style;
+      const name = styleName(style.slug, style.name);
+      const blurb = styleBlurb(style.slug, style.blurb);
+      const unit = style.count === 1 ? t("ui.piece.one", "piece") : t("ui.piece.many", "pieces");
+      spTitle.textContent = name;
+      spCount.textContent = `${style.count} ${unit} \u00b7 ${blurb}`;
       spGrid.innerHTML = Array.from({ length: style.count }, (_, i) => `
-        <img src="${imgPath(style, i)}" alt="${style.name} ${i + 1}" loading="lazy">
+        <img src="${escAttr(imgPath(style, i))}" alt="${escAttr(name)} ${i + 1}" loading="lazy">
       `).join("");
       panel.classList.add("is-open");
       panel.setAttribute("aria-hidden", "false");
       document.body.classList.add("panel-open");
       spClose.focus();
     };
+
+    document.addEventListener("langchange", () => {
+      if (activeStyle && panel.classList.contains("is-open")) openStylePanel(activeStyle);
+    });
 
     const closePanel = () => {
       panel.classList.remove("is-open");
@@ -390,38 +465,70 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const CHANNELS = (DATA.contact || [])
-      .map((c) => ({ key: c.key, label: c.label, href: c.href, path: ICON_PATHS[c.key] || "" }))
+      .map((c) => ({
+        key: c.key,
+        label: c.label,
+        href: c.href,
+        path: ICON_PATHS[c.key] || ""
+      }))
       .filter((c) => c.path && c.href);
 
     const modal = document.createElement("div");
     modal.className = "book-modal";
     modal.id = "bookModal";
     modal.setAttribute("aria-hidden", "true");
+    document.body.appendChild(modal);
+
     modal.innerHTML = `
       <div class="book-modal__inner" role="dialog" aria-modal="true" aria-labelledby="bmTitle">
-        <button class="book-modal__close" type="button" aria-label="Tutup">&times;</button>
+        <button class="book-modal__close" type="button" aria-label="${escAttr(t("ui.close", "Tutup"))}">&times;</button>
         <div class="book-modal__brand">
           <div>
             <img class="book-modal__logo" src="assets/img/logo.png" alt="" width="200" height="200">
             <p class="book-modal__brand-name">Diana<span>Tattoo Studio</span></p>
           </div>
-          <p class="book-modal__brand-note">Custom only &middot; Bali<br>Since ${SINCE}</p>
+          <p class="book-modal__brand-note"></p>
         </div>
         <div class="book-modal__body">
-          <p class="book-modal__eyebrow">Book a Session</p>
-          <h2 class="book-modal__title" id="bmTitle">Mari mulai percakapan</h2>
-          <p class="book-modal__sub">Pilih kanal yang paling nyaman. Ceritakan ide, referensi, dan penempatan tato Anda &mdash; konsultasi gratis, tanpa komitmen.</p>
+          <p class="book-modal__eyebrow"></p>
+          <h2 class="book-modal__title" id="bmTitle"></h2>
+          <p class="book-modal__sub"></p>
           <div class="book-modal__channels">
             ${CHANNELS.map((c) => `
-              <a class="book-modal__channel book-modal__channel--${c.key}" href="${c.href}" target="_blank" rel="noopener">
+              <a class="book-modal__channel book-modal__channel--${escAttr(c.key)}" href="${escAttr(c.href)}" target="_blank" rel="noopener" data-channel="${escAttr(c.key)}">
                 <span class="book-modal__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${c.path}"/></svg></span>
-                <span class="book-modal__channel-label">${c.label}</span>
+                <span class="book-modal__channel-label"></span>
               </a>`).join("")}
           </div>
-          <p class="book-modal__foot">Balasan biasanya dalam beberapa jam pada jam operasional, Senin&ndash;Sabtu 10.00&ndash;20.00 WITA.</p>
+          <p class="book-modal__foot"></p>
         </div>
       </div>`;
-    document.body.appendChild(modal);
+
+    /* isi teks modal — dipanggil ulang setiap bahasa berganti */
+    const applyModalText = () => {
+      const set = (sel, value, asHtml) => {
+        const el = modal.querySelector(sel);
+        if (!el) return;
+        if (asHtml) el.innerHTML = value;
+        else el.textContent = value;
+      };
+      const closeEl = modal.querySelector(".book-modal__close");
+      if (closeEl) closeEl.setAttribute("aria-label", t("ui.close", "Tutup"));
+      set(".book-modal__brand-note", tf("ui.book.brandNote", { since: SINCE }), true);
+      set(".book-modal__eyebrow", t("ui.book.eyebrow", "Book a Session"));
+      set(".book-modal__title", t("ui.book.title", "Mari mulai percakapan"));
+      set(".book-modal__sub", t("ui.book.sub", ""));
+      set(".book-modal__foot", t("ui.book.foot", ""));
+      modal.querySelectorAll("[data-channel]").forEach((a) => {
+        const key = a.dataset.channel;
+        const fallback = (CHANNELS.find((c) => c.key === key) || {}).label || key;
+        const labelEl = a.querySelector(".book-modal__channel-label");
+        if (labelEl) labelEl.textContent = contactLabel(key, fallback);
+      });
+    };
+
+    applyModalText();
+    document.addEventListener("langchange", applyModalText);
 
     const inner = modal.querySelector(".book-modal__inner");
     const closeBtn = modal.querySelector(".book-modal__close");
