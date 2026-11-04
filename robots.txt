@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api
 
-Sitemap: https://dianatattoostudio.com/sitemap.xml
+Sitemap: https://www.dianatattoostudio.com/sitemap.xml

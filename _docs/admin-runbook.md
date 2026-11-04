@@ -10,14 +10,14 @@ Dokumen ini menjelaskan **alur situs**, **cara kerja halaman admin**, dan **cara
 | Item | Nilai |
 | --- | --- |
 | Jenis situs | Statis (HTML + CSS + JS), tanpa framework |
-| Produksi | https://dianatattoostudio.com |
+| Produksi | https://www.dianatattoostudio.com |
 | Cermin | https://rafie110594.github.io/DianaTattooStudio/ (GitHub Pages) |
-| Admin | https://dianatattoostudio.com/admin |
+| Admin | https://www.dianatattoostudio.com/admin |
 | Repo | `rafie110594/DianaTattoStudio` (branch `main`) |
 | Sumber konten | `content/site.json` |
 
 Domain `dianatattoostudio.com` dibeli di Vercel (registrar Vercel, NS `ns1/ns2.vercel-dns.com`).
-Apex adalah domain utama; `www.dianatattoostudio.com` redirect 308 ke apex. URL lama
+`www.dianatattoostudio.com` adalah domain utama; apex redirect 308 ke www. URL lama
 `diana-tatto-studio.vercel.app` juga redirect 301/308 ke domain baru lewat `vercel.json`.
 
 Situs di-deploy **otomatis** setiap ada commit ke `main` (Vercel + GitHub Pages).
