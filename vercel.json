@@ -1,9 +1,9 @@
 {
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [{ "type": "host", "value": "diana-tatto-studio.vercel.app" }],
-      "destination": "https://dianatattoostudio.com/:path*",
+      "destination": "https://dianatattoostudio.com/$1",
       "permanent": true
     },
     { "source": "/admin", "destination": "/admin/", "permanent": true },
