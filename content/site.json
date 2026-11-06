@@ -277,6 +277,11 @@
           "src": "assets/img/styles/japanese/japanese-05.jpg",
           "w": 1200,
           "h": 1599
+        },
+        {
+          "src": "https://pejdntndo8kbpji2.public.blob.vercel-storage.com/media/styles/japanese/japanese-oIt0PU0d8qupZmU4vEf1ve2AU0Wnsm.jpg",
+          "w": 3000,
+          "h": 4000
         }
       ]
     },
