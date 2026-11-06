@@ -62,6 +62,9 @@ const BLOB_HOST = /^https:\/\/[a-z0-9-]+\.public\.blob\.vercel-storage\.com\//i;
 const isBlob = (src) => BLOB_HOST.test(src);
 const isRepo = (src) => src.startsWith("assets/img/") || src.startsWith("assets/video/");
 
+/* repo assets that must never be swept away: they are the built-in fallback */
+const KEEP_REPO = new Set(["assets/video/cinematic.mp4"]);
+
 /* every blob we own that the new site no longer references */
 async function findOrphanBlobs(newSite, { graceMs = 0 } = {}) {
   if (!process.env.BLOB_READ_WRITE_TOKEN) return [];
@@ -104,7 +107,7 @@ async function findOrphans(oldSite, newSite, { deep = true } = {}) {
     }
   }
 
-  return { blobs, repo: [...repoCandidates].filter((f) => /\.(jpe?g|png|webp|mp4|webm)$/i.test(f)) };
+  return { blobs, repo: [...repoCandidates].filter((f) => !KEEP_REPO.has(f) && /\.(jpe?g|png|webp|mp4|webm)$/i.test(f)) };
 }
 
 export default async function handler(req, res) {

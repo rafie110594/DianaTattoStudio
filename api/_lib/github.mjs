@@ -102,13 +102,48 @@ export function contentHash(buf) {
 
 /* commit a set of files atomically */
 export async function commitFiles(files, message, author) {
+  let lastErr;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      return await commitOnce(files, message, author);
+    } catch (e) {
+      lastErr = e;
+      /* 422 = stale ref or stale delete entry; retry once with a fresh base */
+      if (attempt === 0 && e.status === 422) continue;
+      throw e;
+    }
+  }
+  throw lastErr;
+}
+
+async function commitOnce(files, message, author) {
   const parent = await getRef();
   const parentCommit = await getCommit(parent);
   const baseTree = parentCommit.tree.sha;
 
-  const entries = [];
+  /* GitHub rejects deleting a path that is not in the base tree (422 BadObjectState) */
+  let existing = null;
+  try {
+    const base = await getTree(baseTree);
+    if (!base.truncated) {
+      existing = new Set(base.tree.filter((e) => e.type === "blob").map((e) => e.path));
+    }
+  } catch {
+    existing = null;
+  }
+
+  /* one entry per path; a later write wins over an earlier delete */
+  const byPath = new Map();
   for (const f of files) {
+    if (!f || !f.path) continue;
+    byPath.set(f.path, f);
+  }
+
+  const entries = [];
+  for (const f of byPath.values()) {
     if (f.delete) {
+      const exists = existing ? existing.has(f.path) : (await getFileSha(f.path)) !== null;
+      if (!exists) continue;
       entries.push({ path: f.path, mode: "100644", type: "blob", sha: null });
       continue;
     }

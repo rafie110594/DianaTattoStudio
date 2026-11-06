@@ -340,7 +340,7 @@
 
   $("#heroRemove").addEventListener("click", () => {
     if (!state.site.hero?.video) return;
-    if (!confirm("Hapus video hero? Beranda akan memakai latar gradien.")) return;
+    if (!confirm("Hapus video hero? Dikembalikan ke video bawaan.")) return;
     state.site.hero = { video: { src: "assets/video/cinematic.mp4", type: "video/mp4" } };
     renderHero();
     markDirty();
