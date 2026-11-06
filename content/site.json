@@ -9,7 +9,7 @@
   ],
   "hero": {
     "video": {
-      "src": "assets/video/cinematic.mp4",
+      "src": "https://pejdntndo8kbpji2.public.blob.vercel-storage.com/media/hero/cinematic-llXAQaneInUCKnzQlls9a7Doigat1c.mp4",
       "type": "video/mp4"
     }
   },
